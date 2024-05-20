@@ -1,20 +1,24 @@
 import levenshtein from "fastest-levenshtein";
 
 import wizdomController from "../controllers/wizdomController.js";
+import lodash from "lodash";
 
 
 const getSubtitleSrt = async (provider, subtitleID) => {
-  let srtContent;
-
-  if (provider === "wizdom") srtContent = await wizdomController.getSubtitleSrt(subtitleID);
+  const srtContent = await subtitleProviders[provider].getSubtitleSrt(subtitleID);
 
   return srtContent;
 };
 
-const getSubtitlesList = async (imdbID, season, episode) => {
-  const wizdomSubtitles = await wizdomController.getSubtitlesList(imdbID, season, episode);
+const getSubtitlesList = async (userConfig, imdbID, season, episode) => {
+  let subtitles = [];
 
-  return wizdomSubtitles;
+  const subtitlePromises = userConfig.map(provider => subtitleProviders[provider].getSubtitlesList(imdbID, season, episode));
+  const subtitlesArray = await Promise.all(subtitlePromises);
+  subtitlesArray.forEach(providerSubtitles => mergeSubtitles(subtitles, providerSubtitles));
+
+  console.log(subtitles);
+  return subtitles;
 };
 
 const sortSubtitlesByFilename = (subtitles, filename) => {
@@ -25,6 +29,15 @@ const sortSubtitlesByFilename = (subtitles, filename) => {
     return similarityA - similarityB;
   });
 }
+
+const mergeSubtitles = (subtitles, providerSubtitles) => {
+  const mergedSubtitles = lodash.unionBy(subtitles, providerSubtitles, 'id');
+  subtitles.splice(0, subtitles.length, ...mergedSubtitles);
+}
+
+const subtitleProviders = {
+  Wizdom: wizdomController,
+};
 
 const stremioService = {
   getSubtitleSrt,
