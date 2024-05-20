@@ -1,14 +1,14 @@
-import superagent from 'superagent';
+import undici from "undici";
 
 
-const get = async (url, headers = {}) => await superagent.get(url).set(headers);
-const getBuffer = async (url, headers = {}) => await superagent.get(url).set(headers).buffer(true);
-const post = async (url, headers = {}, body = {}) => await superagent.post(url).set(headers).send(body);
+const get = async (url, headers = {}) => await undici.request(url, { headers });
+const getBuffer = async (url, headers = {}) => await undici.request(url, { headers });
+const post = async (url, headers = {}, body = {}) => await undici.request(url, { headers, body: Buffer.from(JSON.stringify(body)) });
 
 const request = {
     get,
     getBuffer,
-    post
+    post,
 }
 
 
