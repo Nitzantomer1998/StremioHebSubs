@@ -28,6 +28,7 @@
     "moment-timezone": "^0.5.45",
     "pg": "^8.11.5",
     "superagent": "^9.0.2",
+    "undici": "^6.18.0",
     "winston": "^3.13.0"
   },
   "devDependencies": {
