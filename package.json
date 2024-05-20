@@ -1,11 +1,11 @@
 {
   "name": "universal-hebrew-subtitles",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "Stremio Addon for Hebrew subtitles from all the top notch websites in one convenient location.",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "linter": "npx eslint .",
+    "linter": "npx eslint src/.",
     "depcheck": "npx depcheck",
     "depupdate": "npx npm-check-updates"
   },
@@ -24,6 +24,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "fastest-levenshtein": "^1.0.16",
+    "lodash": "^4.17.21",
     "moment-timezone": "^0.5.45",
     "pg": "^8.11.5",
     "superagent": "^9.0.2",
