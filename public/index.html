@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtitle Source Configuration</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Subtitle Sources</h1>
+        <form id="configForm">
+            <label>
+                <input type="checkbox" name="source" value="Wizdom">
+                Wizdom (Recommended)
+            </label>
+            <button type="button" onclick="saveConfig()">Save</button>
+        </form>
+        <div class="feedback-toggle" onclick="toggleFeedback()">Got a Request or Issue? Click Here</div>
+        <div class="feedback" id="feedback">
+            <h2>Feedback</h2>
+            <p><a href="https://github.com/Nitzantomer1998/UniversalHebrewSubtitles/issues" target="_blank">Open an
+                    issue here</a>.</p>
+        </div>
+    </div>
+    <script src="static/script.js"></script>
+</body>
+
+</html>
