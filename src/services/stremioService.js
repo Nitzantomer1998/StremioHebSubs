@@ -17,7 +17,6 @@ const getSubtitlesList = async (userConfig, imdbID, season, episode) => {
   const subtitlesArray = await Promise.all(subtitlePromises);
   subtitlesArray.forEach(providerSubtitles => mergeSubtitles(subtitles, providerSubtitles));
 
-  console.log(subtitles);
   return subtitles;
 };
 
