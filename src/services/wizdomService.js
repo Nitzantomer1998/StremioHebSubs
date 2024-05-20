@@ -8,8 +8,7 @@ import request from "../utils/request.js";
 const fetchSubtitlesFromWizdom = async (imdbID, season, episode) => {
     const url = `${wizdomApi.CONTENT_URL}/search?action=by_id&imdb=${imdbID}&season=${season}&episode=${episode}`;
     const response = await request.get(url);
-
-    const wizdomSubtitles = response.body;
+    const wizdomSubtitles = await response.body.json();
 
     wizdomSubtitles.forEach((s) => {
         s.name = s.versioname;
@@ -33,8 +32,9 @@ const mapSubtitlesToStremio = (subtitles) => {
 const extractSubtitleFromWizdom = async (subtitleID) => {
     const url = `${wizdomApi.DOWNLOAD_URL}/${subtitleID}`;
     const response = await request.getBuffer(url);
+    const data = await response.body.arrayBuffer();
 
-    const zip = new AdmZip(response.body);
+    const zip = new AdmZip(Buffer.from(data));
     const zipEntries = zip.getEntries();
     const srtEntry = zipEntries.find(entry => entry.entryName.endsWith('.srt'));
     const srtContent = srtEntry.getData().toString('utf8');
