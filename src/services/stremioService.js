@@ -1,5 +1,6 @@
 import levenshtein from "fastest-levenshtein";
 
+import osController from "../controllers/osController.js";
 import wizdomController from "../controllers/wizdomController.js";
 import lodash from "lodash";
 
@@ -35,6 +36,7 @@ const mergeSubtitles = (subtitles, providerSubtitles) => {
 }
 
 const subtitleProviders = {
+  OS: osController,
   Wizdom: wizdomController,
 };
 
