@@ -3,7 +3,7 @@ import baseConfig from "./baseConfig.js";
 
 const manifestConfig = {
   id: "universal-hebrew-subtitles",
-  version: "3.0.5",
+  version: process.env.npm_package_version,
 
   catalogs: [],
   resources: ["subtitles"],
