@@ -24,16 +24,18 @@ const fetchSubtitlesFromOS = async (imdbID, season, episode) => {
 
 const mapSubtitlesToStremio = (subtitles) => {
     return subtitles.map((s) => ({
-        url: `${baseConfig.BASE_URL}/subtitles/OS/${s.imdbID}/${s.season}/${s.episode}/${s.id}.srt`,
         id: s.name,
+        provider: "OpenSubtitles",
+        score: 0,
         lang: "heb",
+        url: `${baseConfig.BASE_URL}/subtitles/OS/${s.imdbID}/${s.season}/${s.episode}/${s.id}.srt`,
     }));
 };
 
 const extractSubtitleFromOS = async (subtitleID) => {
     const url = osApi.DOWNLOAD_URL;
 
-    const linkResponse = await safePost(url, { file_id: subtitleID });
+    const linkResponse = await safePost(url, { file_id: subtitleID }, osConfig.getApiKeysLength);
     const responseBody = await linkResponse.body.json();
     const srtLink = responseBody.link;
 
@@ -43,7 +45,7 @@ const extractSubtitleFromOS = async (subtitleID) => {
     return srtContent;
 };
 
-const safePost = async (url, body, tries = 2) => {
+const safePost = async (url, body, tries) => {
     let response;
 
     while (tries) {

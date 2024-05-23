@@ -1,8 +1,8 @@
-import levenshtein from "fastest-levenshtein";
+import lodash from "lodash";
+import stringSimilarity from "string-similarity";
 
 import osController from "../controllers/osController.js";
 import wizdomController from "../controllers/wizdomController.js";
-import lodash from "lodash";
 
 
 const getSubtitleSrt = async (provider, subtitleID) => {
@@ -22,13 +22,16 @@ const getSubtitlesList = async (userConfig, imdbID, season, episode) => {
 };
 
 const sortSubtitlesByFilename = (subtitles, filename) => {
-  return subtitles.sort((a, b) => {
-    const similarityA = levenshtein.distance(a.id, filename);
-    const similarityB = levenshtein.distance(b.id, filename);
+  return subtitles.map(s => {
+    const similarity = stringSimilarity.compareTwoStrings(s.id, filename);
+    const percentage = (similarity * 100).toFixed(2);
 
-    return similarityA - similarityB;
-  });
-}
+    s.id = `${percentage}% [${s.provider}] ${s.id}`;
+    s.score = parseFloat(percentage);
+    return s;
+
+  }).sort((a, b) => b.score - a.score);
+};
 
 const mergeSubtitles = (subtitles, providerSubtitles) => {
   const mergedSubtitles = lodash.unionBy(subtitles, providerSubtitles, 'id');
