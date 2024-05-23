@@ -23,9 +23,11 @@ const fetchSubtitlesFromWizdom = async (imdbID, season, episode) => {
 
 const mapSubtitlesToStremio = (subtitles) => {
     return subtitles.map((s) => ({
-        url: `${baseConfig.BASE_URL}/subtitles/Wizdom/${s.imdbID}/${s.season}/${s.episode}/${s.id}.srt`,
         id: s.name,
+        provider: "Wizdom",
+        score: 0,
         lang: "heb",
+        url: `${baseConfig.BASE_URL}/subtitles/Wizdom/${s.imdbID}/${s.season}/${s.episode}/${s.id}.srt`,
     }));
 };
 
