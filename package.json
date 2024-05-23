@@ -1,6 +1,6 @@
 {
   "name": "universal-hebrew-subtitles",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "description": "Stremio Addon for Hebrew subtitles from all the top notch websites in one convenient location.",
   "main": "index.js",
   "scripts": {
