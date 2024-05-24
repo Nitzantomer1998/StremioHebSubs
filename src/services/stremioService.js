@@ -24,7 +24,8 @@ const getSubtitlesList = async (userConfig, imdbID, season, episode) => {
 const sortSubtitlesByFilename = (subtitles, filename) => {
   return subtitles.map(s => {
     const similarity = stringSimilarity.compareTwoStrings(s.id, filename);
-    const percentage = (similarity * 100).toFixed(2);
+
+    const percentage = Math.round(similarity * 100);
 
     s.id = `${percentage}% [${s.provider}] ${s.id}`;
     s.score = parseFloat(percentage);
