@@ -5,26 +5,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (encodedUserConfig) {
         const userConfig = JSON.parse(atob(encodedUserConfig));
-        userConfig.forEach(source => {
-            const checkbox = document.querySelector(`input[name="source"][value="${source}"]`);
+        userConfig.forEach(provider => {
+            const checkbox = document.querySelector(`input[name="provider"][value="${provider}"]`);
             if (checkbox) checkbox.checked = true;
         });
     }
+
+    const checkboxes = document.querySelectorAll('input[name="provider"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateSaveButtonState);
+    });
+
+    updateSaveButtonState();
 });
 
+const updateSaveButtonState = () => {
+    const selectedProviders = document.querySelectorAll('input[name="provider"]:checked');
+    const saveButton = document.getElementById('saveButton');
+    saveButton.disabled = selectedProviders.length === 0;
+};
+
 const saveConfig = () => {
-    const selectedSources = Array.from(document.querySelectorAll('input[name="source"]:checked')).map(checkbox => checkbox.value);
-    const encodedSources = btoa(JSON.stringify(selectedSources));
-    const stremioLink = `${window.location.host}/${encodedSources}/manifest.json`;
+    const selectedProviders = Array.from(document.querySelectorAll('input[name="provider"]:checked')).map(checkbox => checkbox.value);
+    const encodedProviders = btoa(JSON.stringify(selectedProviders));
+    const stremioLink = `${window.location.host}/${encodedProviders}/manifest.json`;
 
     window.open(`stremio://${stremioLink}`, "_blank");
 }
 
-const toggleFeedback = () => {
-    const feedbackElement = document.getElementById('feedback');
-    if (feedbackElement.style.display === 'none' || feedbackElement.style.display === '') {
-        feedbackElement.style.display = 'block';
-    } else {
-        feedbackElement.style.display = 'none';
-    }
-}
+const redirectToIssuePage = () => { window.open("https://github.com/Nitzantomer1998/UniversalHebrewSubtitles/issues", "_blank"); }

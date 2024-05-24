@@ -8,7 +8,14 @@ body {
     margin: 0;
 }
 
-.container {
+.outer-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-container {
     background-color: #ffffff;
     padding: 40px 30px;
     border-radius: 12px;
@@ -20,7 +27,7 @@ body {
 
 h1 {
     font-size: 28px;
-    color: #333333;
+    color: #4CAF50;
     margin-bottom: 20px;
 }
 
@@ -59,52 +66,30 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    width: 100%;
+    margin-bottom: 15px;
 }
 
 button:hover {
     background-color: #45a049;
 }
 
-.feedback-toggle {
-    margin-top: 30px;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
 }
 
-.feedback-toggle:hover {
-    background-color: #45a049;
-}
-
-.feedback {
-    display: none;
-    margin-top: 10px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
-
-.feedback h2 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.feedback p {
-    font-size: 16px;
-    color: #555;
-}
-
-.feedback a {
+.feedback-button {
+    background-color: white;
     color: #4CAF50;
-    text-decoration: none;
-    font-weight: bold;
+    border: 2px solid #4CAF50;
 }
 
-.feedback a:hover {
-    text-decoration: underline;
+.feedback-button:hover {
+    background-color: #f0f0f0;
+}
+
+.vertical-space {
+    height: 20px;
 }
