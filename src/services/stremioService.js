@@ -1,8 +1,8 @@
 import lodash from "lodash";
-import stringSimilarity from "string-similarity";
 
 import osController from "../controllers/osController.js";
 import wizdomController from "../controllers/wizdomController.js";
+import stringSimilarity from "../utils/stringSimilarity.js";
 
 
 const getSubtitleSrt = async (provider, subtitleID) => {
@@ -23,11 +23,10 @@ const getSubtitlesList = async (userConfig, imdbID, season, episode) => {
 
 const sortSubtitlesByFilename = (subtitles, filename) => {
     return subtitles.map(s => {
-        const similarity = stringSimilarity.compareTwoStrings(s.id, filename);
-        const percentage = Math.round(similarity * 100);
+        const similarityScore = stringSimilarity(s.id, filename);
 
-        s.id = `${percentage}% [${s.provider}] ${s.id}`;
-        s.score = parseFloat(percentage);
+        s.id = `${similarityScore}% [${s.provider}] ${s.id}`;
+        s.score = parseFloat(similarityScore);
 
         return s;
 
