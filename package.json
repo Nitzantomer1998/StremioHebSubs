@@ -1,11 +1,11 @@
 {
-  "name": "universal-hebrew-subtitles",
+  "name": "stremio-heb-subs",
   "version": "3.1.0",
   "description": "Stremio Addon for Hebrew subtitles from all the top notch websites in one convenient location.",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "linter": "npx eslint src/.",
+    "linter": "npx eslint .",
     "depcheck": "npx depcheck",
     "depupdate": "npx npm-check-updates"
   },
@@ -13,11 +13,12 @@
   "keywords": [
     "stremio",
     "addon",
-    "wizdom",
+    "hebrew",
     "subtitles",
-    "hebrew"
+    "wizdom",
+    "opensubtitles"
   ],
-  "author": "",
+  "author": "Nitzan Tomer",
   "license": "ISC",
   "dependencies": {
     "adm-zip": "^0.5.12",
@@ -31,10 +32,8 @@
     "winston": "^3.13.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.2.0",
     "depcheck": "^1.4.7",
-    "eslint": "^9.2.0",
-    "globals": "^15.2.0",
+    "eslint": "^9.3.0",
     "npm-check-updates": "^16.14.20"
   }
 }
