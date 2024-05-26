@@ -11,26 +11,28 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    const checkboxes = document.querySelectorAll('input[name="provider"]');
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', updateSaveButtonState);
-    });
+    const checkboxes = document.querySelectorAll("input[name='provider']");
+    checkboxes.forEach(checkbox => { checkbox.addEventListener("change", updateSaveButtonState); });
 
     updateSaveButtonState();
 });
 
 const updateSaveButtonState = () => {
-    const selectedProviders = document.querySelectorAll('input[name="provider"]:checked');
-    const saveButton = document.getElementById('saveButton');
+    const selectedProviders = document.querySelectorAll("input[name='provider']:checked");
+    const saveButton = document.getElementById("saveButton");
     saveButton.disabled = selectedProviders.length === 0;
 };
 
 const saveConfig = () => {
-    const selectedProviders = Array.from(document.querySelectorAll('input[name="provider"]:checked')).map(checkbox => checkbox.value);
+    const selectedProviders = Array.from(document.querySelectorAll("input[name='provider']:checked")).map(checkbox => checkbox.value);
     const encodedProviders = btoa(JSON.stringify(selectedProviders));
     const stremioLink = `${window.location.host}/${encodedProviders}/manifest.json`;
 
     window.open(`stremio://${stremioLink}`, "_blank");
-}
+};
 
-const redirectToIssuePage = () => { window.open("https://github.com/Nitzantomer1998/UniversalHebrewSubtitles/issues", "_blank"); }
+const redirectToIssuePage = () => { window.open("https://github.com/Nitzantomer1998/StremioHebSubs/issues", "_blank"); };
+
+
+window.saveConfig = saveConfig;
+window.redirectToIssuePage = redirectToIssuePage;

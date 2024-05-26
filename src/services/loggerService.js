@@ -15,7 +15,7 @@ const loggerService = {
     logDatabase,
     logDownload,
     logWatch,
-}
+};
 
 
 export default loggerService;

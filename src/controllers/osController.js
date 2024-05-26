@@ -14,7 +14,6 @@ const getSubtitlesList = async (imdbID, season, episode) => {
     return stremioSubtitles;
 };
 
-
 const osController = {
     getSubtitleSrt,
     getSubtitlesList,

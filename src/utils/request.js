@@ -10,7 +10,7 @@ const request = {
     get,
     getBuffer,
     post,
-}
+};
 
 
 export default request;

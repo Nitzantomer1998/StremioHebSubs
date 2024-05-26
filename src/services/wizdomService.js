@@ -38,8 +38,8 @@ const extractSubtitleFromWizdom = async (subtitleID) => {
 
     const zip = new AdmZip(Buffer.from(data));
     const zipEntries = zip.getEntries();
-    const srtEntry = zipEntries.find(entry => entry.entryName.endsWith('.srt'));
-    const srtContent = srtEntry.getData().toString('utf8');
+    const srtEntry = zipEntries.find(entry => entry.entryName.endsWith(".srt"));
+    const srtContent = srtEntry.getData().toString("utf8");
 
     return srtContent;
 };
