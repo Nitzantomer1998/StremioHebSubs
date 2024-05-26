@@ -27,7 +27,6 @@
     "lodash": "^4.17.21",
     "moment-timezone": "^0.5.45",
     "pg": "^8.11.5",
-    "string-similarity": "^4.0.4",
     "undici": "^6.18.0",
     "winston": "^3.13.0"
   },
