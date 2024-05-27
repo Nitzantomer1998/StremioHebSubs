@@ -5,10 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (encodedUserConfig) {
         const userConfig = JSON.parse(atob(encodedUserConfig));
-        userConfig.forEach(provider => {
-            const checkbox = document.querySelector(`input[name="provider"][value="${provider}"]`);
-            if (checkbox) checkbox.checked = true;
-        });
+        userConfig.forEach(provider => document.querySelector(`input[name="provider"][value="${provider}"]`).checked = true);
     }
 
     const checkboxes = document.querySelectorAll("input[name='provider']");
