@@ -12,14 +12,14 @@ const updateApiKey = () => { apiKeyIndex = (apiKeyIndex + 1) % apiKeys.length; }
 const getHeaders = () => ({
     "Content-Type": "application/json",
     "Api-Key": getApiKey(),
-    "User-Agent": "UniversalHebrewSubtitles v3.0.6",
+    "User-Agent": "StremioHebSub v1.0.0",
 });
 
 const postHeaders = () => ({
     "Accept": "application/json",
     "Content-Type": "application/json",
     "Api-Key": getApiKey(),
-    "User-Agent": "UniversalHebrewSubtitles v3.0.6",
+    "User-Agent": "StremioHebSub v1.0.0",
 });
 
 const osConfig = {
