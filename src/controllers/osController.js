@@ -1,12 +1,6 @@
 import osService from "../services/osService.js";
 
 
-const getSubtitleSrt = async (subtitleID) => {
-    const srtContent = await osService.extractSubtitleFromOS(subtitleID);
-
-    return srtContent;
-};
-
 const getSubtitlesList = async (imdbID, season, episode) => {
     const osSubtitles = await osService.fetchSubtitlesFromOS(imdbID, season, episode);
     const stremioSubtitles = osService.mapSubtitlesToStremio(osSubtitles);
@@ -14,9 +8,15 @@ const getSubtitlesList = async (imdbID, season, episode) => {
     return stremioSubtitles;
 };
 
+const getSubtitleContent = async (subtitleID) => {
+    const subtitleContent = await osService.extractSubtitleFromOS(subtitleID);
+
+    return subtitleContent;
+};
+
 const osController = {
-    getSubtitleSrt,
     getSubtitlesList,
+    getSubtitleContent,
 };
 
 
