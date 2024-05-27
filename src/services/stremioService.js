@@ -1,15 +1,7 @@
-import lodash from "lodash";
-
 import osController from "../controllers/osController.js";
 import wizdomController from "../controllers/wizdomController.js";
 import stringSimilarity from "../utils/stringSimilarity.js";
 
-
-const getSubtitleSrt = async (provider, subtitleID) => {
-    const srtContent = await subtitleProviders[provider].getSubtitleSrt(subtitleID);
-
-    return srtContent;
-};
 
 const getSubtitlesList = async (userConfig, imdbID, season, episode) => {
     const subtitles = [];
@@ -21,21 +13,27 @@ const getSubtitlesList = async (userConfig, imdbID, season, episode) => {
     return subtitles;
 };
 
+const getSubtitleContent = async (provider, subtitleID) => {
+    const subtitleContent = await subtitleProviders[provider].getSubtitleContent(subtitleID);
+
+    return subtitleContent;
+};
+
 const sortSubtitlesByFilename = (subtitles, filename) => {
-    return subtitles.map(s => {
+    subtitles.forEach(s => {
         const similarityScore = stringSimilarity(s.id, filename);
 
         s.id = `${similarityScore}% [${s.provider}] ${s.id}`;
         s.score = parseFloat(similarityScore);
+    });
 
-        return s;
+    subtitles.sort((a, b) => b.score - a.score);
 
-    }).sort((a, b) => b.score - a.score);
+    return subtitles;
 };
 
 const mergeSubtitles = (subtitles, providerSubtitles) => {
-    const mergedSubtitles = lodash.unionBy(subtitles, providerSubtitles, "id");
-    subtitles.splice(0, subtitles.length, ...mergedSubtitles);
+    subtitles.push(...providerSubtitles.filter(sub => !subtitles.some(s => s.id === sub.id)));
 };
 
 const subtitleProviders = {
@@ -44,7 +42,7 @@ const subtitleProviders = {
 };
 
 const stremioService = {
-    getSubtitleSrt,
+    getSubtitleContent,
     getSubtitlesList,
     sortSubtitlesByFilename,
 };

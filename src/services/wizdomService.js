@@ -22,13 +22,15 @@ const fetchSubtitlesFromWizdom = async (imdbID, season, episode) => {
 };
 
 const mapSubtitlesToStremio = (subtitles) => {
-    return subtitles.map((s) => ({
+    const stremioSubtitles = subtitles.map((s) => ({
         id: s.name,
         provider: "Wizdom",
         score: 0,
         lang: "heb",
-        url: `${baseConfig.BASE_URL}/subtitles/Wizdom/${s.imdbID}/${s.season}/${s.episode}/${s.id}.srt`,
+        url: `${baseConfig.BASE_URL}/subtitles/Wizdom/${s.imdbID}/${s.season}/${s.episode}/${s.id}`,
     }));
+
+    return stremioSubtitles;
 };
 
 const extractSubtitleFromWizdom = async (subtitleID) => {
@@ -38,10 +40,10 @@ const extractSubtitleFromWizdom = async (subtitleID) => {
 
     const zip = new AdmZip(Buffer.from(data));
     const zipEntries = zip.getEntries();
-    const srtEntry = zipEntries.find(entry => entry.entryName.endsWith(".srt"));
-    const srtContent = srtEntry.getData().toString("utf8");
+    const fileEntry = zipEntries.find(entry => [".srt", ".str"].some(extention => entry.entryName.endsWith(extention)));
 
-    return srtContent;
+    if (fileEntry === undefined) throw new Error("Subtitle File Extension Not Supported");
+    return fileEntry.getData().toString("utf8");
 };
 
 const wizdomService = {

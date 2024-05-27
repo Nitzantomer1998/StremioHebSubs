@@ -23,13 +23,15 @@ const fetchSubtitlesFromOS = async (imdbID, season, episode) => {
 };
 
 const mapSubtitlesToStremio = (subtitles) => {
-    return subtitles.map((s) => ({
+    const stremioSubtitles = subtitles.map((s) => ({
         id: s.name,
         provider: "OpenSubtitles",
         score: 0,
         lang: "heb",
-        url: `${baseConfig.BASE_URL}/subtitles/OS/${s.imdbID}/${s.season}/${s.episode}/${s.id}.srt`,
+        url: `${baseConfig.BASE_URL}/subtitles/OS/${s.imdbID}/${s.season}/${s.episode}/${s.id}`,
     }));
+
+    return stremioSubtitles;
 };
 
 const extractSubtitleFromOS = async (subtitleID) => {
@@ -37,20 +39,19 @@ const extractSubtitleFromOS = async (subtitleID) => {
 
     const linkResponse = await safePost(url, { file_id: subtitleID }, osConfig.getApiKeysLength);
     const responseBody = await linkResponse.body.json();
-    const srtLink = responseBody.link;
+    const subtitleLink = responseBody.link;
 
-    const srtResponse = await request.get(srtLink, osConfig.getHeaders());
-    const srtContent = await srtResponse.body.text();
+    const subtitleResponse = await request.get(subtitleLink, osConfig.getHeaders());
+    const subtitleContent = await subtitleResponse.body.text();
 
-    return srtContent;
+    return subtitleContent;
 };
 
 const safePost = async (url, body, tries) => {
     let response;
 
     while (tries) {
-        const headers = osConfig.postHeaders();
-        response = await request.post(url, headers, body);
+        response = await request.post(url, osConfig.postHeaders(), body);
 
         if (response.statusCode === 200) break;
         else osConfig.updateApiKey();
