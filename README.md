@@ -1,19 +1,19 @@
-<h1>Unleash the Power of Wizdom in Stremio!</h1>
+<h1>Unleash the Power of Hebrew Subtitles in Stremio!</h1>
 <p> Stremio with Hebrew Subtitles? Mazel Tov! </p>
 
-<img src="https://i.ibb.co/KLYK0TH/wizdon256.png" style="width: 100px; height: 110px; border-radius: 5px;"><img
-    src="https://www.stremio.com/website/stremio-logo-small.png" style="width: 100px; height: 100px;">
+<div>
+    <img src="https://www.stremio.com/website/stremio-logo-small.png" style="width: 100px; height: 100px;">
+    <img src="https://i.ibb.co/KLYK0TH/wizdon256.png" style="width: 110px; height: 110x;">
+    <img src="https://www.opensubtitles.com/assets/opensubtitles-beta-logo-8f6b0c6dc297bbcce8d571e61f951d14dab0a18a944fce0f7f706b976934955f.png" style="width: 250px; height: 100px;">
+</div>
 
-
-<h2>Stremio & Wizdom: The Dual Powerhouses!</h2>
+<h2>Stremio & HebSub: The Dual Powerhouses!</h2>
 <ul>
     <li>
-        Stremio: Your Content Hub. Discover, manage, and watch all your shows and movies from various streaming
-        services in a single, unified platform.
+        <b>Stremio</b>: Your Content Hub. Discover, manage, and watch all your shows and movies from various streaming services in a single, unified platform.
     </li>
     <li>
-        Wizdom: Your Hebrew Subtitle Oasis. Access a vast library of Hebrew subtitles to ensure seamless
-        understanding of any movie or TV series.
+        <b>HebSub</b>: Your Hebrew Subtitle Oasis in Stremio, where all your shows and movies has a perfect tailored hebrew subtitle
     </li>
 </ul>
 
@@ -21,20 +21,22 @@
 <h2>Effortless Entertainment: Hebrew Made Easy</h2>
 <ul>
     <li>
-        Effortless Hebrew Subtitles: No more juggling subtitles or scouring the web. Find the perfect Hebrew
-        subtitles for your current Stremio content with just a few clicks.
+        <b>Free to Use</b>: No hidden costs, enjoy the addon without any charges.
     </li>
     <li>
-        Seamless Integration: The addon works seamlessly within Stremio. No need to switch between apps or
-        navigate complex menus.
+        <b>Perfect Match Subtitles</b>: Subtitles are sorted by their percentage match to the watched content, with the most compatible ones listed first.
     </li>
     <li>
-        Wide Content Compatibility: Enjoy Hebrew subtitles for a vast library of movies and TV series, ensuring
-        you're covered for your favorite content.
+        <b>Detailed Subtitle Info</b>: Hover over a subtitle to see its match percentage, source, and name.
     </li>
     <li>
-        Always Up-to-Date: The addon is constantly updated to support the latest Stremio features and ensure smooth
-        functionality.
+        <b>Optimized for Performance</b>: Smooth and efficient, ensuring a seamless viewing experience.
+    </li>
+    <li>
+       <b>User Preferences</b>: Tailor your experience by selecting your preferred subtitle sources from top-notch providers.
+    </li>
+    <li>
+        <b>Ongoing Development</b>: Continuous updates with plans for integrating additional subtitle websites.
     </li>
 </ul>
 
@@ -42,21 +44,21 @@
 <h2>Easy as 1, 2, Hebrew!</h2>
 <ol>
     <li>
-        Launch Stremio.
+        <b>Launch Stremio</b>.
     </li>
     <li>
-        Install Addon. 
+        <b>Install Addon</b>:
         <ol>
             <li>
-                Via Stremio: Navigate to the addon center and search <b>Wizdom Subtitles</b>.
+                <b>Via Stremio</b>: Navigate to the addon center and search <b>Heb Subs</b>.
             </li>
             <li>
-                Via Link: Click or Enter the following URL <b>stremio://stremio-wizdom-addon-mcty.onrender.com/manifest.json</b>.
+                <b>Via Link</b>: Enter the following URL: <b>`stremio://https://ec2-18-196-63-110.eu-central-1.compute.amazonaws.com/manifest.json`.</b>.
             </li>
         </ol>
     </li>
     <li>
-        You good to go!
+        <b>You're good to go!</b>
         <ol>
             <li>
                 Open any movie or TV series.
@@ -68,69 +70,49 @@
                 Navigate to "עברית" section.
             </li>
             <li>
-                Pick a subtitle from the list (The 1st is with the highest match compatbility).
+                Select the 1st subtitle, its the optimal one.
             </li>
         </ol>
     </li>
 </ol>
 
 
-<h2>Features: Your Entertainment Advantage</h2>
-<ul>
-    <li>
-        Free to Use: Enjoy the full functionality of the addon without any cost.
-    </li>
-    <li>
-        Easy to Use: No searching the web, just instant delivered with hebrew subtitles, no need for extra steps.
-    </li>
-    <li>
-        Smart Organization: The addon prioritizes the most compatible subtitles for your content, saving you time
-        and frustration.
-    </li>
-    <li>
-        Hovering the subtitle display its full name, easier to adjust to the right watched content.
-    </li>
-    <li>
-        Constantly Evolving: The development team is dedicated to continuous improvement, ensuring the best
-        possible experience.
-    </li>
-</ul>
-
-
 <h2>Future Improvements: The Road Ahead</h2>
 <ul>
     <li>
-        Cache System: Enhance performance by enabling faster retrieval of frequently used subtitles.
+        <b>Cache System</b>: Enhance performance by enabling faster retrieval of frequently used subtitles.
+    </li>
+    <li>
+        <b>Expand Subtitle Sources</b>: Integrate additional subtitle websites to provide a wider selection of subtitles.
     </li>
 </ul>
 
 
-<h2>Endpoints: Under the Hood</h2>
-<p> For those technically curious, here's a breakdown of the crucial endpoints utilized by the addon: </p>
-<table>
-    <thead>
-        <tr>
-            <th>Endpoint</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td> /manifest.json </td>
-            <td> This accessible link serves as the gateway to download the addon directly from the Stremio addon
-                center. </td>
-        </tr>
-        <tr>
-            <td> /subtitles/:contentType/:compoundID/:extraArgs.json </td>
-            <td> This Stremio API endpoint helps retrieve information about the content you're currently watching. </td>
-        </tr>
-        <tr>
-            <td> /:subtitleId.srt </td>
-            <td> This endpoint acts as the bridge between Wizdom and Stremio. It handles extracting the subtitle from a
-                RAR archive and returning it in the widely-used SRT format. </td>
-        </tr>
-    </tbody>
-</table>
+<h2>Technical Stack</h2>
+<ul>
+    <li>
+        <b>AWS EC2</b> for scalable and reliable cloud hosting.
+    </li>
+    <li>
+        <b>Docker</b> for consistent development and deployment environments.
+    </li>
+    <li>
+        <b>Express</b> for the backend server.
+    </li>
+    <li>
+        <b>PosgreSQL</b> for the database.
+    </li>
+    <li>
+        <b>Logger</b> for efficient error tracking and debugging.
+    </li>
+    <li>
+        <b>Linter</b> for maintaining code quality.
+    </li>
+    <li>
+        <b>CICD</b> for seamless integration and deployment processes.
+    </li>
+    
+</ul>
 
 
 <h2>Support</h2>
