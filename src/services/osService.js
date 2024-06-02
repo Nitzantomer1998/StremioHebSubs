@@ -4,7 +4,7 @@ import osConfig from "../configs/osConfig.js";
 import request from "../utils/request.js";
 
 
-const fetchSubtitlesFromOS = async (imdbID, season, episode) => {
+const fetchSubtitles = async (imdbID, season, episode) => {
     const url = `${osApi.CONTENT_URL}/subtitles?imdb_id=${imdbID}${season ? `&season_number=${season}&episode_number=${episode}` : ""}&languages=he`;
     const response = await request.get(url, osConfig.getHeaders());
     const responseBody = await response.body.json();
@@ -34,7 +34,7 @@ const mapSubtitlesToStremio = (subtitles) => {
     return stremioSubtitles;
 };
 
-const extractSubtitleFromOS = async (subtitleID) => {
+const extractSubtitle = async (subtitleID) => {
     const url = osApi.DOWNLOAD_URL;
 
     const linkResponse = await safePost(url, { file_id: subtitleID }, osConfig.getApiKeysLength);
@@ -64,9 +64,9 @@ const safePost = async (url, body, tries) => {
 };
 
 const osService = {
-    fetchSubtitlesFromOS,
+    fetchSubtitles,
     mapSubtitlesToStremio,
-    extractSubtitleFromOS,
+    extractSubtitle,
 };
 
 

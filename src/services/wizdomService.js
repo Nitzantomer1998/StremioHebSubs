@@ -5,7 +5,7 @@ import baseConfig from "../configs/baseConfig.js";
 import request from "../utils/request.js";
 
 
-const fetchSubtitlesFromWizdom = async (imdbID, season, episode) => {
+const fetchSubtitles = async (imdbID, season, episode) => {
     const url = `${wizdomApi.CONTENT_URL}/search?action=by_id&imdb=${imdbID}&season=${season}&episode=${episode}`;
     const response = await request.get(url);
     const wizdomSubtitles = await response.body.json();
@@ -33,7 +33,7 @@ const mapSubtitlesToStremio = (subtitles) => {
     return stremioSubtitles;
 };
 
-const extractSubtitleFromWizdom = async (subtitleID) => {
+const extractSubtitle = async (subtitleID) => {
     const url = `${wizdomApi.DOWNLOAD_URL}/${subtitleID}`;
     const response = await request.getBuffer(url);
     const data = await response.body.arrayBuffer();
@@ -47,9 +47,9 @@ const extractSubtitleFromWizdom = async (subtitleID) => {
 };
 
 const wizdomService = {
-    fetchSubtitlesFromWizdom,
+    fetchSubtitles,
     mapSubtitlesToStremio,
-    extractSubtitleFromWizdom,
+    extractSubtitle,
 };
 
 
