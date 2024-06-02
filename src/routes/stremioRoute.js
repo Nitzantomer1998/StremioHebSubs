@@ -6,8 +6,10 @@ import wrapTryCatch from "../utils/wrapTryCatch.js";
 
 
 const router = express.Router();
-router.get("/static/:path", stremioController.getStaticFile);
-router.get("/:userConfig/static/:path", stremioController.getStaticFile);
+router.get("/", stremioController.getHomePage);
+
+router.get("/static/:folder/:path", stremioController.getStaticFile);
+router.get("/:userConfig/static/:folder/:path", stremioController.getStaticFile);
 
 router.get("/configure", stremioController.getConfigPage);
 router.get("/:userConfig/configure", stremioController.getConfigPage);
