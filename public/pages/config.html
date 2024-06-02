@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add-on Configuration</title>
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="static/styles/config.css">
 </head>
 
 <body>
@@ -14,8 +14,11 @@
             <h1>Subtitle Providers</h1>
 
             <form id="configForm">
-                <label><input type="checkbox" name="provider" value="Wizdom">Wizdom (Recommended)</label>
-                <label><input type="checkbox" name="provider" value="OS">OpenSubtitles</label>
+                <input type="checkbox" id="wizdom" name="provider" value="Wizdom">
+                <label for="wizdom">Wizdom (Recommended)</label>
+
+                <input type="checkbox" id="os" name="provider" value="OS">
+                <label for="os">OpenSubtitles</label>
 
                 <div class="vertical-space"></div>
 
@@ -25,7 +28,7 @@
             <button type="button" class="feedback-button" onclick="redirectToIssuePage()">Got a Request or Issue?</button>
         </div>
     </div>
-    <script src="static/script.js"></script>
+    <script src="static/scripts/config.js"></script>
 </body>
 
 </html>
