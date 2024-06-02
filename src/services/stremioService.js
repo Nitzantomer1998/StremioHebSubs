@@ -1,3 +1,4 @@
+import ktuvitController from "../controllers/ktuvitController.js";
 import osController from "../controllers/osController.js";
 import wizdomController from "../controllers/wizdomController.js";
 import stringSimilarity from "../utils/stringSimilarity.js";
@@ -37,8 +38,9 @@ const mergeSubtitles = (subtitles, providerSubtitles) => {
 };
 
 const subtitleProviders = {
-    OS: osController,
     Wizdom: wizdomController,
+    OS: osController,
+    Ktuvit: ktuvitController,
 };
 
 const stremioService = {
