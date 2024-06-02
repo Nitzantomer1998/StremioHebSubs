@@ -5,8 +5,9 @@ import stremioService from "../services/stremioService.js";
 import extractData from "../utils/dataExtractor.js";
 
 
-const getConfigPage = (req, res) => res.sendFile("index.html", { root: "./public" });
-const getStaticFile = (req, res) => res.sendFile(req.params.path, { root: "./public" });
+const getHomePage = (req, res) => res.sendFile("index.html", { root: "./public/pages" });
+const getConfigPage = (req, res) => res.sendFile("config.html", { root: "./public/pages" });
+const getStaticFile = (req, res) => res.sendFile(req.params.path, { root: `./public/${req.params.folder}` });
 
 const getManifest = async (req, res) => {
     const { userConfig = "Default" } = req.params;
@@ -20,7 +21,7 @@ const getManifest = async (req, res) => {
 const getSubtitlesList = async (req, res) => {
     const { userConfig, imdbID, season, episode, filename } = extractData(req.params);
 
-    loggerService.logWatch(imdbID, season, episode);
+    loggerService.logWatch(imdbID, season, episode, filename);
     dbService.insertWatchedContent(imdbID, season, episode);
 
     const stremioSubtitles = await stremioService.getSubtitlesList(userConfig, imdbID, season, episode);
@@ -41,6 +42,7 @@ const getSubtitleContent = async (req, res) => {
 };
 
 const stremioController = {
+    getHomePage,
     getConfigPage,
     getStaticFile,
     getManifest,
