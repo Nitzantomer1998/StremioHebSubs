@@ -8,11 +8,11 @@ import wrapTryCatch from "../utils/wrapTryCatch.js";
 const router = express.Router();
 router.get("/", stremioController.getHomePage);
 
-router.get("/static/:folder/:path", stremioController.getStaticFile);
-router.get("/:userConfig/static/:folder/:path", stremioController.getStaticFile);
-
 router.get("/configure", stremioController.getConfigPage);
 router.get("/:userConfig/configure", stremioController.getConfigPage);
+
+router.get("/static/:folder/:path", stremioController.getStaticFile);
+router.get("/:userConfig/static/:folder/:path", stremioController.getStaticFile);
 
 router.get("/manifest.json", corsMiddleware, wrapTryCatch(stremioController.getManifest));
 router.get("/:userConfig/manifest.json", corsMiddleware, wrapTryCatch(stremioController.getManifest));
