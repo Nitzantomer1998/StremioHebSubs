@@ -11,7 +11,7 @@ const manifestConfig = {
 
     name: "Heb Subs",
     description: "Enjoy Hebrew subtitles from all the top notch websites in one convenient location.",
-    logo: `${baseConfig.BASE_URL}/static/icon.svg`,
+    logo: `${baseConfig.BASE_URL}/static/icons/icon.svg`,
 
     behaviorHints: {
         configurable: true,
