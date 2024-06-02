@@ -1,0 +1,118 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url(https://dl.strem.io/addon-background.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.outer-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.inner-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 700px;
+    text-align: center;
+    overflow: auto;
+    max-height: 90vh;
+}
+
+.logo-container img {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+.features-container {
+    margin-bottom: 30px;
+}
+
+.features-container h2 {
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.features-container ul {
+    list-style: none;
+    padding: 0;
+    font-size: 16px;
+    color: #cccccc;
+}
+
+.features-container ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.features-container ul li i {
+    color: #4a47a3;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.features-container ul li code {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #cccccc;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    margin-left: 10px;
+}
+
+.windows-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.window {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 250px;
+    margin-bottom: 20px;
+}
+
+.window h3 {
+    font-size: 20px;
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+button {
+    background-color: #ffffff;
+    color: #4a47a3;
+    border: 2px solid #4a47a3;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: rgb(58, 56, 116);
+    color: #ffffff;
+}
