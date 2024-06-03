@@ -1,7 +1,11 @@
-import ktuvitApi from "ktuvit-api";
+import ktuvitHelper from "../helpers/ktuvitHelper.js";
 
 
-const ktuvitConfig = new ktuvitApi(await ktuvitApi.getLoginCookie("darksubsil1@gmail.com", "ZkCyMZfsIHt9HQK4eL8bbfaxXoNBjmFO9w39kt/gA14="));
+const headers = { "Content-Type": "application/json", accept: "application/json, text/javascript, */*; q=0.01", cookie: ktuvitHelper.getCookie() };
+
+const ktuvitConfig = {
+    headers,
+};
 
 
-export default ktuvitConfig;
+export default ktuvitConfig;;
