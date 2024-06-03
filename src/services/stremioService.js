@@ -2,6 +2,7 @@ import ktuvitController from "../controllers/ktuvitController.js";
 import osController from "../controllers/osController.js";
 import wizdomController from "../controllers/wizdomController.js";
 import stringSimilarity from "../utils/stringSimilarity.js";
+import tryCatchWrapper from "../utils/tryCatchWrapper.js";
 
 
 const getSubtitlesList = async (userConfig, imdbID, season, episode) => {
@@ -9,6 +10,7 @@ const getSubtitlesList = async (userConfig, imdbID, season, episode) => {
 
     const subtitlePromises = userConfig.map(provider => subtitleProviders[provider].getSubtitlesList(imdbID, season, episode));
     const subtitlesArray = await Promise.all(subtitlePromises);
+
     subtitlesArray.forEach(providerSubtitles => mergeSubtitles(subtitles, providerSubtitles));
 
     return subtitles;
@@ -42,6 +44,11 @@ const subtitleProviders = {
     OS: osController,
     Ktuvit: ktuvitController,
 };
+
+Object.keys(subtitleProviders).forEach(provider => {
+    subtitleProviders[provider].getSubtitlesList = tryCatchWrapper.local(subtitleProviders[provider].getSubtitlesList);
+    subtitleProviders[provider].getSubtitleContent = tryCatchWrapper.local(subtitleProviders[provider].getSubtitleContent);
+});
 
 const stremioService = {
     getSubtitleContent,
