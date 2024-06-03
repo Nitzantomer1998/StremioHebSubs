@@ -13,7 +13,7 @@ const local = (fn) => async (...args) => {
 
 const tryCatchWrapper = {
     local,
-    global
+    global,
 };
 
 
