@@ -98,7 +98,7 @@ input[type="checkbox"]:checked+label::after {
 
 button {
     align-self: center;
-    background-color: #4a47a3;
+    background-color: #1db131;
     color: white;
     border: none;
     padding: 12px 25px;
@@ -111,7 +111,7 @@ button {
 }
 
 button:hover {
-    background-color: rgb(58, 56, 116);
+    background-color: rgb(66, 140, 87);
 }
 
 button:disabled {
