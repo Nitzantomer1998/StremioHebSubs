@@ -5,11 +5,11 @@ import request from "../utils/request.js";
 
 
 const fetchSubtitles = async (imdbID, season, episode) => {
-    const url = `${osApi.CONTENT_URL}/subtitles?imdb_id=${imdbID}${season ? `&season_number=${season}&episode_number=${episode}` : ""}&languages=he`;
+    const url = `${osApi.CONTENT_URL}/subtitles?imdb_id=${imdbID}${season === "0" ? "" : `&season_number=${season}&episode_number=${episode}`}&languages=he`;
     const response = await request.get(url, osConfig.getHeaders());
     const responseBody = await response.body.json();
-    const osSubtitles = responseBody.data;
 
+    const osSubtitles = responseBody.data;
     osSubtitles.forEach((s) => {
         s.id = s.attributes.files[0].file_id;
         s.name = s.attributes.release;
@@ -36,7 +36,6 @@ const mapSubtitlesToStremio = (subtitles) => {
 
 const extractSubtitle = async (subtitleID) => {
     const url = osApi.DOWNLOAD_URL;
-
     const linkResponse = await safePost(url, { file_id: subtitleID }, osConfig.getApiKeysLength);
     const responseBody = await linkResponse.body.json();
     const subtitleLink = responseBody.link;
@@ -60,6 +59,7 @@ const safePost = async (url, body, tries) => {
     }
 
     if (response.statusCode === 406) throw new Error("OpenSubtitles API Keys Are Maxed Out");
+    if (response.statusCode !== 200) throw new Error("OpenSubtitles API Error");
     return response;
 };
 
