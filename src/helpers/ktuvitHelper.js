@@ -32,7 +32,7 @@ const getKtuvitID = async (imdbID, isMovie) => {
     return ktuvitID;
 };
 
-const getImdbData = async (imdbID) => new Promise((resolve, reject) => { imdb2name(imdbID, (error, res, data) => { resolve(data?.meta); }); });
+const getImdbData = async (imdbID) => new Promise((resolve) => { imdb2name(imdbID, (error, res, data) => { resolve(data?.meta); }); });
 
 const searchKtuvit = async (imdbData) => {
     const query = {
@@ -66,7 +66,7 @@ const extractSubtitlesFromHTML = (html) => {
     html = html.includes("<!DOCTYPE html>") ? html : `<!DOCTYPE html><table id="subtitlesList"><thead><tr/></thead>${html}</table>`;
 
     const dom = new jsdom.JSDOM(html);
-    const document = dom.window.document;
+    const { document } = dom.window;
 
     const subtitlesListElement = document.getElementById("subtitlesList");
     const rows = Array.from(subtitlesListElement.rows).slice(1);
