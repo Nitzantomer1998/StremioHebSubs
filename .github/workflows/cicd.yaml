@@ -54,6 +54,14 @@ jobs:
           --name stremio-heb-subs-container \
           -e BASE_URL="${{ secrets.BASE_URL }}" \
           -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+          -e KTUVIT_USERNAME="${{ secrets.KTUVIT_USERNAME }}" \
+          -e KTUVIT_PASSWORD="${{ secrets.KTUVIT_PASSWORD }}" \
+          -e KTUVIT_LOGIN_URL="${{ secrets.KTUVIT_LOGIN_URL }}" \
+          -e KTUVIT_SEARCH_URL="${{ secrets.KTUVIT_SEARCH_URL }}" \
+          -e KTUVIT_SERIES_URL="${{ secrets.KTUVIT_SERIES_URL }}" \
+          -e KTUVIT_MOVIES_URL="${{ secrets.KTUVIT_MOVIES_URL }}" \
+          -e KTUVIT_DOWNLOAD_URL="${{ secrets.KTUVIT_DOWNLOAD_URL }}" \
+          -e KTUVIT_DOWNLOAD_IDENTIFIER_URL="${{ secrets.KTUVIT_DOWNLOAD_IDENTIFIER_URL }}" \
           -e OS_API_KEY="${{ secrets.OS_API_KEY }}" \
           -e OS_CONTENT_URL="${{ secrets.OS_CONTENT_URL }}" \
           -e OS_DOWNLOAD_URL="${{ secrets.OS_DOWNLOAD_URL }}" \
