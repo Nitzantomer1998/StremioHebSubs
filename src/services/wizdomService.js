@@ -2,13 +2,14 @@ import AdmZip from "adm-zip";
 
 import wizdomApi from "../apis/wizdomApi.js";
 import baseConfig from "../configs/baseConfig.js";
+import wizdomHelper from "../helpers/wizdomHelper.js";
 import request from "../utils/request.js";
 
 
 const fetchSubtitles = async (imdbID, season, episode) => {
     const url = `${wizdomApi.CONTENT_URL}/search?action=by_id&imdb=${imdbID}&season=${season}&episode=${episode}`;
-    const response = await request.get(url);
-    
+    const response = await wizdomHelper.safeFetchSubtitles(url);
+
     const wizdomSubtitles = await response.body.json();
     wizdomSubtitles.forEach((s) => {
         s.name = s.versioname;
