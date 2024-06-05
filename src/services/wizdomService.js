@@ -3,12 +3,11 @@ import AdmZip from "adm-zip";
 import wizdomApi from "../apis/wizdomApi.js";
 import baseConfig from "../configs/baseConfig.js";
 import wizdomHelper from "../helpers/wizdomHelper.js";
-import request from "../utils/request.js";
 
 
 const fetchSubtitles = async (imdbID, season, episode) => {
     const url = `${wizdomApi.CONTENT_URL}/search?action=by_id&imdb=${imdbID}&season=${season}&episode=${episode}`;
-    const response = await wizdomHelper.safeFetchSubtitles(url);
+    const response = await wizdomHelper.safeGetRequest(url);
 
     const wizdomSubtitles = await response.body.json();
     wizdomSubtitles.forEach((s) => {
@@ -36,7 +35,7 @@ const mapSubtitlesToStremio = (subtitles) => {
 
 const extractSubtitle = async (subtitleID) => {
     const url = `${wizdomApi.DOWNLOAD_URL}/${subtitleID}`;
-    const response = await request.getBuffer(url);
+    const response = await wizdomHelper.safeGetBufferRequest(url);
     const data = await response.body.arrayBuffer();
 
     const zip = new AdmZip(Buffer.from(data));

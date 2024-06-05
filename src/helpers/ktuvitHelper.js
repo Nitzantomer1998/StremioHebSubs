@@ -2,8 +2,47 @@ import imdb2name from "name-to-imdb";
 import jsdom from "jsdom";
 
 import ktuvitApi from "../apis/ktuvitApi.js";
-import ktuvitConfig from "../configs/ktuvitConfig.js";
 import request from "../utils/request.js";
+
+
+const safeGetRequest = async (url, tries = 2) => {
+    let response;
+
+    while (tries--) {
+        response = await request.get(url, ktuvitHeaders);
+
+        if (response.statusCode === 200) break;
+    }
+
+    if (response.statusCode !== 200) throw new Error(`Ktuvit safeGetRequest - Code=${response.statusCode}, Message=${response.body}`);
+    return response;
+};
+
+const safeGetBufferRequest = async (url, tries = 2) => {
+    let response;
+
+    while (tries--) {
+        response = await request.getBuffer(url, ktuvitHeaders);
+
+        if (response.statusCode === 200) break;
+    }
+
+    if (response.statusCode !== 200) throw new Error(`Ktuvit safeGetBufferRequest - Code=${response.statusCode}, Message=${response.body}`);
+    return response;
+};
+
+const safePostRequest = async (url, body, tries = 2) => {
+    let response;
+
+    while (tries--) {
+        response = await request.post(url, ktuvitHeaders, body);
+
+        if (response.statusCode === 200) break;
+    }
+
+    if (response.statusCode !== 200) throw new Error(`Ktuvit safePostRequest - Code=${response.statusCode}, Message=${response.body}`);
+    return response;
+};
 
 
 let cookie = null;
@@ -16,6 +55,8 @@ const getCookie = async () => {
     [cookie] = response.headers["set-cookie"][1].split(";");
     return cookie;
 };
+const ktuvitHeaders = { "Content-Type": "application/json", accept: "application/json, text/javascript, */*; q=0.01", cookie: await getCookie() };
+
 
 const getKtuvitID = async (imdbID, isMovie) => {
     let imdbData = await getImdbData(imdbID);
@@ -53,7 +94,7 @@ const searchKtuvit = async (imdbData) => {
     };
 
     const url = ktuvitApi.SEARCH_URL;
-    const response = await request.post(url, ktuvitConfig.headers, query);
+    const response = await request.post(url, ktuvitHeaders, query);
     const responseData = await response.body.json();
 
     const ktuvitResults = JSON.parse(responseData.d).Films;
@@ -82,6 +123,10 @@ const extractSubtitlesFromHTML = (html) => {
 
 
 const ktuvitHelper = {
+    safeGetRequest,
+    safeGetBufferRequest,
+    safePostRequest,
+
     getCookie,
     getKtuvitID,
     extractSubtitlesFromHTML,
