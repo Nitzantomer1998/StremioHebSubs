@@ -1,71 +1,29 @@
-name: CI/CD Pipeline
+name: CI/CD
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  validation:
-    runs-on: [ubuntu-latest]
+  cicd-job:
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
-      
-      - name: Set up Node.js
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20.12.2'
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm install
 
-      - name: Run linter
+      - name: Run Linter
         run: npm run linter
 
-  build:
-    needs: validation
-    runs-on: [ubuntu-latest]
-    steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
-      
-      - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/stremio-heb-subs .
-
-      - name: Publish image to Docker Hub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/stremio-heb-subs:latest
-
-  deploy:
-    needs: build
-    runs-on: [AWS-EC2]
-    steps:
-      - name: Pull Docker image from Docker Hub
-        run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/stremio-heb-subs:latest
-
-      - name: Delete old container
-        run: sudo docker rm -f stremio-heb-subs-container || true
-
-      - name: Run Docker container
-        run: |
-          sudo docker run -d -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
-          --name stremio-heb-subs-container \
-          -e BASE_URL="${{ secrets.BASE_URL }}" \
-          -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
-          -e KTUVIT_USERNAME="${{ secrets.KTUVIT_USERNAME }}" \
-          -e KTUVIT_PASSWORD="${{ secrets.KTUVIT_PASSWORD }}" \
-          -e KTUVIT_LOGIN_URL="${{ secrets.KTUVIT_LOGIN_URL }}" \
-          -e KTUVIT_SEARCH_URL="${{ secrets.KTUVIT_SEARCH_URL }}" \
-          -e KTUVIT_SERIES_URL="${{ secrets.KTUVIT_SERIES_URL }}" \
-          -e KTUVIT_MOVIES_URL="${{ secrets.KTUVIT_MOVIES_URL }}" \
-          -e KTUVIT_DOWNLOAD_URL="${{ secrets.KTUVIT_DOWNLOAD_URL }}" \
-          -e KTUVIT_DOWNLOAD_IDENTIFIER_URL="${{ secrets.KTUVIT_DOWNLOAD_IDENTIFIER_URL }}" \
-          -e OS_API_KEY="${{ secrets.OS_API_KEY }}" \
-          -e OS_CONTENT_URL="${{ secrets.OS_CONTENT_URL }}" \
-          -e OS_DOWNLOAD_URL="${{ secrets.OS_DOWNLOAD_URL }}" \
-          -e PORT=${{ secrets.PORT }} \
-          -e WIZDOM_CONTENT_URL="${{ secrets.WIZDOM_CONTENT_URL }}" \
-          -e WIZDOM_DOWNLOAD_URL="${{ secrets.WIZDOM_DOWNLOAD_URL }}" \
-          ${{ secrets.DOCKER_USERNAME }}/stremio-heb-subs
+      - name: Deploy Service
+        run: curl "https://api.render.com/deploy/srv-cpg1vcuct0pc73d5a1p0?key=${{ secrets.RENDER_API_KEY }}"
+                   
