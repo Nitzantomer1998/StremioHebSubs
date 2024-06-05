@@ -38,12 +38,12 @@ const safePostRequest = async (url, body, tries = 2) => {
         response = await request.post(url, ktuvitHeaders, body);
 
         if (response.statusCode === 200) break;
+
     }
 
     if (response.statusCode !== 200) throw new Error(`Ktuvit safePostRequest - Code=${response.statusCode}, Message=${response.body}`);
     return response;
 };
-
 
 let cookie = null;
 const getCookie = async () => {
@@ -120,7 +120,6 @@ const extractSubtitlesFromHTML = (html) => {
         return { id, name, fileType };
     });
 };
-
 
 const ktuvitHelper = {
     safeGetRequest,
