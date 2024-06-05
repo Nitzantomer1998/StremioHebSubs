@@ -16,8 +16,6 @@ const safeFetchSubtitles = async (url, tries = 2) => {
     return response;
 };
 
-
-
 const wizdomHelper = {
     safeFetchSubtitles,
 };
