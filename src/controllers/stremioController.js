@@ -2,7 +2,7 @@ import manifestConfig from "../configs/manifestConfig.js";
 import dbService from "../services/dbService.js";
 import loggerService from "../services/loggerService.js";
 import stremioService from "../services/stremioService.js";
-import extractData from "../utils/dataExtractor.js";
+import extractData from "../utils/extractData.js";
 
 
 const getHomePage = (req, res) => res.sendFile("index.html", { root: "./public/pages" });
