@@ -1,9 +1,10 @@
-import imdb2name from "name-to-imdb";
-import jsdom from "jsdom";
 import chardet from "chardet";
 import iconv from "iconv-lite";
+import imdb2name from "name-to-imdb";
+import transliteration from "transliteration";
 
 import ktuvitApi from "../apis/ktuvitApi.js";
+import extractHtmlContent from "../utils/extractHtmlContent.js";
 import request from "../utils/request.js";
 
 
@@ -59,16 +60,16 @@ const getCookie = async () => {
 };
 const ktuvitHeaders = { "Content-Type": "application/json", accept: "application/json, text/javascript, */*; q=0.01", cookie: await getCookie() };
 
-
 const getKtuvitID = async (imdbID, isMovie) => {
     let imdbData = await getImdbData(imdbID);
     if (imdbData === undefined) throw new Error(`Ktuvit Imdb data not found for imdbID=${imdbID}`);
 
     imdbData = {
-        name: imdbData.name,
-        type: isMovie ? "0" : "1",
+        name: transliteration.transliterate(imdbData.name),
         year: imdbData.year,
+        type: isMovie ? "0" : "1",
     };
+    if (imdbData === undefined) throw new Error(`Ktuvit Imdb data not found for imdbID=${imdbID}`);
 
     const ktuvitID = await searchKtuvit(imdbData);
     if (ktuvitID === undefined) throw new Error(`Ktuvit ID not found for imdbID=${imdbID}`);
@@ -105,22 +106,22 @@ const searchKtuvit = async (imdbData) => {
     return ktuvitID;
 };
 
-const extractSubtitlesFromHTML = (html) => {
-    html = html.includes("<!DOCTYPE html>") ? html : `<!DOCTYPE html><table id="subtitlesList"><thead><tr/></thead>${html}</table>`;
 
-    const dom = new jsdom.JSDOM(html);
-    const { document } = dom.window;
+const extractSubtitlesFromHTML = (html, isMovie) => {
+    const tableRowsRegex = new RegExp("<tr>([\\s\\S]*?)<\\/tr>", "gi");
+    const idRegex = /data-subtitle-id="([^"]+)"/;
+    const nameRegex = /<div style="float: right; width: 95%;">\s*([\s\S]*?)<br \/>/;
 
-    const subtitlesListElement = document.getElementById("subtitlesList");
-    const rows = Array.from(subtitlesListElement.rows).slice(1);
+    const tableRows = extractHtmlContent.many(html, tableRowsRegex);
+    const filteredTableRows = isMovie ? tableRows.slice(1) : tableRows;
+    const extractedSubtitles = filteredTableRows.map((row) => {
+        const subtitleID = extractHtmlContent.single(row, idRegex)?.[1];
+        const subtitleName = extractHtmlContent.single(row, nameRegex)?.[1].trim();
 
-    return rows?.map(row => {
-        const id = row.cells[5].firstElementChild.getAttribute("data-subtitle-id");
-        const name = row.cells[0].querySelector("div").innerHTML.split("<br>")[0].trim();
-        const fileType = row.cells[1].innerHTML.trim();
-
-        return { id, name, fileType };
+        return { id: subtitleID, name: subtitleName };
     });
+
+    return extractedSubtitles;
 };
 
 const decodeSubtitle = async (subtitleBuffer) => {
