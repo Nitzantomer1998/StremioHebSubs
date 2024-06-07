@@ -1,5 +1,7 @@
 import imdb2name from "name-to-imdb";
 import jsdom from "jsdom";
+import chardet from "chardet";
+import iconv from "iconv-lite";
 
 import ktuvitApi from "../apis/ktuvitApi.js";
 import request from "../utils/request.js";
@@ -112,7 +114,7 @@ const extractSubtitlesFromHTML = (html) => {
     const subtitlesListElement = document.getElementById("subtitlesList");
     const rows = Array.from(subtitlesListElement.rows).slice(1);
 
-    return rows.map(row => {
+    return rows?.map(row => {
         const id = row.cells[5].firstElementChild.getAttribute("data-subtitle-id");
         const name = row.cells[0].querySelector("div").innerHTML.split("<br>")[0].trim();
         const fileType = row.cells[1].innerHTML.trim();
@@ -121,6 +123,13 @@ const extractSubtitlesFromHTML = (html) => {
     });
 };
 
+const decodeSubtitle = async (subtitleBuffer) => {
+    const bufferArray = Buffer.from(subtitleBuffer);
+    const detectedEncoding = chardet.detect(bufferArray);
+    const decodeSubtitleContent = iconv.decode(bufferArray, detectedEncoding);
+
+    return decodeSubtitleContent;
+};
 const ktuvitHelper = {
     safeGetRequest,
     safeGetBufferRequest,
@@ -129,6 +138,7 @@ const ktuvitHelper = {
     getCookie,
     getKtuvitID,
     extractSubtitlesFromHTML,
+    decodeSubtitle,
 };
 
 

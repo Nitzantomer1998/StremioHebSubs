@@ -44,9 +44,10 @@ const extractSubtitle = async (subtitleID) => {
 
     const downloadUrl = `${ktuvitApi.DOWNLOAD_URL}DownloadIdentifier=${identifier}`;
     const downloadResponse = await ktuvitHelper.safeGetBufferRequest(downloadUrl);
-    const srtContent = await downloadResponse.body.text();
+    const subtitleBuffer = await downloadResponse.body.arrayBuffer();
+    const subtitleContent = await ktuvitHelper.decodeSubtitle(subtitleBuffer);
 
-    return srtContent;
+    return subtitleContent;
 };
 
 const ktuvitService = {
