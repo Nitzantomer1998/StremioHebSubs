@@ -30,7 +30,6 @@ const sortSubtitlesByFilename = (subtitles, filename) => {
         s.score = similarityScore;
     });
 
-    subtitles.forEach(s => { if (s.provider === "Ktuvit") { s.score = Math.max(0, s.score - 20); } });
     subtitles.sort((a, b) => b.score - a.score);
 
     return subtitles;
