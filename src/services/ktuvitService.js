@@ -10,7 +10,7 @@ const fetchSubtitles = async (imdbID, season, episode) => {
     const response = await ktuvitHelper.safeGetRequest(url);
     const responseHTML = await response.body.text();
 
-    const ktuvitSubtitles = ktuvitHelper.extractSubtitlesFromHTML(responseHTML);
+    const ktuvitSubtitles = ktuvitHelper.extractSubtitlesFromHTML(responseHTML, season === "0");
     ktuvitSubtitles.forEach((s) => {
         s.id = `${ktuvitID}-${s.id}`;
 
