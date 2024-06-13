@@ -1,9 +1,0 @@
-@host=localhost:7000
-@contentType=movie
-@imdbID=tt14253846
-@season=0
-@episode=0
-@extraArgs=videoHash=9841297ce3ba4437&videoSize=4943419251&filename=Anyone.But.You.2023.REPACK.1080p.WEB-DL.DD5.1.H.264-EniaHD.mkv
-
-
-GET http://{{host}}/WyJXaXpkb20iLCJPUyJd/subtitles/{{contentType}}/{{imdbID}}:{{season}}:{{episode}}/{{extraArgs}}.json

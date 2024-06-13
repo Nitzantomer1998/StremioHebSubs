@@ -1,4 +1,0 @@
-@host=localhost:7000
-
-
-GET http://{{host}}/manifest.json
