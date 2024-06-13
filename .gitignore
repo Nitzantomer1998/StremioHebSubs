@@ -2,8 +2,10 @@
 .env
 
 
-# Dependency directories
+# Dependency Folders
 node_modules
 package-lock.json
 
+
+# Test Folders
 requests
