@@ -1,6 +1,5 @@
 import chardet from "chardet";
 import iconv from "iconv-lite";
-import imdb2name from "name-to-imdb";
 import transliteration from "transliteration";
 
 import ktuvitApi from "../apis/ktuvitApi.js";
@@ -61,22 +60,24 @@ const getCookie = async () => {
 const ktuvitHeaders = { "Content-Type": "application/json", accept: "application/json, text/javascript, */*; q=0.01", cookie: await getCookie() };
 
 const getKtuvitID = async (imdbID, isMovie) => {
-    let imdbData = await getImdbData(imdbID);
-    if (imdbData === undefined) throw new Error(`Ktuvit Imdb data not found for imdbID=${imdbID}`);
+    const tmdbUrl = `https://api.themoviedb.org/3/find/${imdbID}`;
+    const tmdbParams = `?api_key=327b1b93b0c88d00ffbf8865686bdb4c&external_source=imdb_id`;
+    const tmdbResponse = await safeGetRequest(tmdbUrl + tmdbParams);
 
-    imdbData = {
-        name: transliteration.transliterate(imdbData.name),
-        year: imdbData.year,
+    const responseData = await tmdbResponse.body.json();
+    const name = isMovie ? responseData.movie_results[0]?.title : responseData.tv_results[0]?.name;
+    if (name === undefined) throw new Error(`Tmdb data not found for imdbID=${imdbID}`);
+
+    const imdbData = {
+        imdbID,
+        name: transliteration.transliterate(name),
         type: isMovie ? "0" : "1",
     };
-    if (imdbData === undefined) throw new Error(`Ktuvit Imdb data not found for imdbID=${imdbID}`);
 
     const ktuvitID = await searchKtuvit(imdbData);
     if (ktuvitID === undefined) throw new Error(`Ktuvit ID not found for imdbID=${imdbID}`);
     return ktuvitID;
 };
-
-const getImdbData = async (imdbID) => new Promise((resolve) => { imdb2name(imdbID, (error, res, data) => { resolve(data?.meta); }); });
 
 const searchKtuvit = async (imdbData) => {
     const query = {
@@ -92,16 +93,17 @@ const searchKtuvit = async (imdbData) => {
             SearchType: imdbData.type,
             Studios: null,
             WithSubsOnly: false,
-            Year: imdbData.year,
+            Year: "",
         },
     };
 
     const url = ktuvitApi.SEARCH_URL;
+
     const response = await request.post(url, ktuvitHeaders, query);
     const responseData = await response.body.json();
 
     const ktuvitResults = JSON.parse(responseData.d).Films;
-    const ktuvitID = ktuvitResults[0]?.ID;
+    const ktuvitID = ktuvitResults.find((result) => extractIMDbID(result.IMDB_Link) === imdbData.imdbID)?.ID;
 
     return ktuvitID;
 };
@@ -131,6 +133,12 @@ const decodeSubtitle = async (subtitleBuffer) => {
 
     return decodeSubtitleContent;
 };
+
+const extractIMDbID = (url) => {
+    const match = url.match(/tt\d+/);
+    return match ? match[0] : null;
+};
+
 const ktuvitHelper = {
     safeGetRequest,
     safeGetBufferRequest,
