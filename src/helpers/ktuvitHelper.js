@@ -3,70 +3,20 @@ import iconv from "iconv-lite";
 import transliteration from "transliteration";
 
 import ktuvitApi from "../apis/ktuvitApi.js";
+import tmdbApi from "../apis/tmdbApi.js";
+import ktuvitConfig from "../configs/ktuvitConfig.js";
+import tmdbConfig from "../configs/tmdbConfig.js";
 import extractHtmlContent from "../utils/extractHtmlContent.js";
 import request from "../utils/request.js";
 
 
-const safeGetRequest = async (url, tries = 2) => {
-    let response;
-
-    while (tries--) {
-        response = await request.get(url, ktuvitHeaders);
-
-        if (response.statusCode === 200) break;
-    }
-
-    if (response.statusCode !== 200) throw new Error(`Ktuvit safeGetRequest - Code=${response.statusCode}, Message=${response.body}`);
-    return response;
-};
-
-const safeGetBufferRequest = async (url, tries = 2) => {
-    let response;
-
-    while (tries--) {
-        response = await request.getBuffer(url, ktuvitHeaders);
-
-        if (response.statusCode === 200) break;
-    }
-
-    if (response.statusCode !== 200) throw new Error(`Ktuvit safeGetBufferRequest - Code=${response.statusCode}, Message=${response.body}`);
-    return response;
-};
-
-const safePostRequest = async (url, body, tries = 2) => {
-    let response;
-
-    while (tries--) {
-        response = await request.post(url, ktuvitHeaders, body);
-
-        if (response.statusCode === 200) break;
-
-    }
-
-    if (response.statusCode !== 200) throw new Error(`Ktuvit safePostRequest - Code=${response.statusCode}, Message=${response.body}`);
-    return response;
-};
-
-let cookie = null;
-const getCookie = async () => {
-    if (cookie) return cookie;
-
-    const url = ktuvitApi.LOGIN_URL;
-    const response = await request.post(url, { "Content-Type": "application/json" }, { request: { Email: process.env.KTUVIT_USERNAME, Password: process.env.KTUVIT_PASSWORD } });
-
-    [cookie] = response.headers["set-cookie"][1].split(";");
-    return cookie;
-};
-const ktuvitHeaders = { "Content-Type": "application/json", accept: "application/json, text/javascript, */*; q=0.01", cookie: await getCookie() };
-
 const getKtuvitID = async (imdbID, isMovie) => {
-    const tmdbUrl = `https://api.themoviedb.org/3/find/${imdbID}`;
-    const tmdbParams = `?api_key=327b1b93b0c88d00ffbf8865686bdb4c&external_source=imdb_id`;
-    const tmdbResponse = await safeGetRequest(tmdbUrl + tmdbParams);
-
+    const tmdbUrl = `${tmdbApi.SEARCH_URL}/${imdbID}?api_key=${tmdbConfig.API_KEY}&external_source=imdb_id`;
+    const tmdbResponse = await request.safeGetRequest(tmdbUrl, {}, "Ktuvit");
     const responseData = await tmdbResponse.body.json();
+
     const name = isMovie ? responseData.movie_results[0]?.title : responseData.tv_results[0]?.name;
-    if (name === undefined) throw new Error(`Tmdb data not found for imdbID=${imdbID}`);
+    if (name === undefined) throw new Error(`TMDb name not found for imdbID=${imdbID}`);
 
     const imdbData = {
         imdbID,
@@ -76,6 +26,7 @@ const getKtuvitID = async (imdbID, isMovie) => {
 
     const ktuvitID = await searchKtuvit(imdbData);
     if (ktuvitID === undefined) throw new Error(`Ktuvit ID not found for imdbID=${imdbID}`);
+
     return ktuvitID;
 };
 
@@ -98,8 +49,7 @@ const searchKtuvit = async (imdbData) => {
     };
 
     const url = ktuvitApi.SEARCH_URL;
-
-    const response = await request.post(url, ktuvitHeaders, query);
+    const response = await request.safePostRequest(url, ktuvitConfig.GET_HEADERS(), query, "Ktuvit");
     const responseData = await response.body.json();
 
     const ktuvitResults = JSON.parse(responseData.d).Films;
@@ -107,7 +57,6 @@ const searchKtuvit = async (imdbData) => {
 
     return ktuvitID;
 };
-
 
 const extractSubtitlesFromHTML = (html, isMovie) => {
     const tableRowsRegex = new RegExp("<tr>([\\s\\S]*?)<\\/tr>", "gi");
@@ -136,15 +85,21 @@ const decodeSubtitle = async (subtitleBuffer) => {
 
 const extractIMDbID = (url) => {
     const match = url.match(/tt\d+/);
+
     return match ? match[0] : null;
 };
 
-const ktuvitHelper = {
-    safeGetRequest,
-    safeGetBufferRequest,
-    safePostRequest,
+const updateCookie = async () => {
+    const url = ktuvitApi.LOGIN_URL;
+    const response = await request.safePostRequest(url, { "Content-Type": "application/json" }, { request: { Email: ktuvitConfig.USERNAME, Password: ktuvitConfig.PASSWORD } }, "Ktuvit");
 
-    getCookie,
+    ktuvitConfig.UPDATE_COOKIE(response.headers["set-cookie"]);
+};
+
+setInterval(updateCookie, ktuvitConfig.COOKIE_REFRESH_INTERVAL);
+await updateCookie();
+
+const ktuvitHelper = {
     getKtuvitID,
     extractSubtitlesFromHTML,
     decodeSubtitle,
