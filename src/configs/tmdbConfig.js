@@ -3,7 +3,7 @@ dotenv.config();
 
 
 const tmdbConfig = {
-    API_KEY: process.env.TMDB_API_KEY
+    API_KEY: process.env.TMDB_API_KEY,
 };
 
 
