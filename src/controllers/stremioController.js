@@ -19,7 +19,8 @@ const getManifest = async (req, res) => {
 };
 
 const getSubtitlesList = async (req, res) => {
-    const { userConfig, imdbID, season, episode, filename } = extractData(req.params);
+    const { isValid, userConfig, imdbID, season, episode, filename } = extractData(req.params);
+    if (isValid === false) return res.send({ subtitles: [] });
 
     loggerService.logWatch(imdbID, season, episode, filename);
     dbService.insertWatchedContent([imdbID, season, episode]);
@@ -27,7 +28,7 @@ const getSubtitlesList = async (req, res) => {
     const stremioSubtitles = await stremioService.getSubtitlesList(userConfig, imdbID, season, episode);
     const sortedSubtitles = stremioService.sortSubtitlesByFilename(stremioSubtitles, filename);
 
-    res.send({ subtitles: sortedSubtitles });
+    return res.send({ subtitles: sortedSubtitles });
 };
 
 const getSubtitleContent = async (req, res) => {
