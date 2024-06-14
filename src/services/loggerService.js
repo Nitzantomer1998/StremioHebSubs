@@ -1,14 +1,14 @@
-import logger from "../configs/logger.js";
+import loggerConfig from "../configs/loggerConfig.js";
 
 
-const logError = (error) => { logger.error(["Error", error]); };
-const logInstall = (userConfig) => { logger.info(["Install", `Addon Installed, userConfig=${userConfig}`]); };
-const logExpress = () => { logger.info(["Express", "Express Connected"]); };
-const logDatabase = () => { logger.info(["Database", "Database Connected"]); };
-const logDownload = (provider, subtitleID) => { logger.info(["Download", `provider=${provider}, subtitleID=${subtitleID}`]); };
-const logWatch = (imdbID, season, episode, filename) => { logger.info(["Watch", `imdbID=${imdbID}, season=${season}, episode=${episode}, filename=${filename}`]); };
+const logError = (error) => { loggerConfig.error(["Error", error]); };
+const logInstall = (userConfig) => { loggerConfig.info(["Install", `Addon Installed, userConfig=${userConfig}`]); };
+const logExpress = () => { loggerConfig.info(["Express", "Express Connected"]); };
+const logDatabase = () => { loggerConfig.info(["Database", "Database Connected"]); };
+const logDownload = (provider, subtitleID) => { loggerConfig.info(["Download", `provider=${provider}, subtitleID=${subtitleID}`]); };
+const logWatch = (imdbID, season, episode, filename) => { loggerConfig.info(["Watch", `imdbID=${imdbID}, season=${season}, episode=${episode}, filename=${filename}`]); };
 
-const loggerService = {
+const loggerConfigService = {
     logError,
     logInstall,
     logExpress,
@@ -18,4 +18,4 @@ const loggerService = {
 };
 
 
-export default loggerService;
+export default loggerConfigService;

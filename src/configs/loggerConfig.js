@@ -2,7 +2,7 @@ import winston from "winston";
 import moment from "moment-timezone";
 
 
-const logger = winston.createLogger({
+const loggerConfig = winston.createLogger({
     format: winston.format.combine(
         winston.format.timestamp({ format: () => moment().tz("Asia/Jerusalem").format("DD/MM HH:mm:ss") }),
         winston.format.printf(({ timestamp, message }) => `[${message[0]}] << ${message[1]} >> ${timestamp}`),
@@ -11,4 +11,4 @@ const logger = winston.createLogger({
 });
 
 
-export default logger;
+export default loggerConfig;
