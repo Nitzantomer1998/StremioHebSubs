@@ -15,47 +15,52 @@ const getKtuvitID = async (imdbID, isMovie) => {
     const tmdbResponse = await request.safeGetRequest(tmdbUrl, {}, "Ktuvit");
     const responseData = await tmdbResponse.body.json();
 
-    const name = isMovie ? responseData.movie_results[0]?.title : responseData.tv_results[0]?.name;
-    if (name === undefined) throw new Error(`TMDb name not found for imdbID=${imdbID}`);
-
     const imdbData = {
         imdbID,
-        name: transliteration.transliterate(name),
+        name: transliteration.transliterate(isMovie ? responseData.movie_results[0].title : responseData.tv_results[0].name),
         type: isMovie ? "0" : "1",
     };
 
     const ktuvitID = await searchKtuvit(imdbData);
-    if (ktuvitID === undefined) throw new Error(`Ktuvit ID not found for imdbID=${imdbID}`);
 
     return ktuvitID;
 };
 
 const searchKtuvit = async (imdbData) => {
-    const query = {
-        request: {
-            Actors: [],
-            Countries: [],
-            Directors: [],
-            FilmName: imdbData.name,
-            Genres: [],
-            Languages: [],
-            Page: 1,
-            Rating: [],
-            SearchType: imdbData.type,
-            Studios: null,
-            WithSubsOnly: false,
-            Year: "",
-        },
-    };
+    let page = 1;
 
-    const url = ktuvitApi.SEARCH_URL;
-    const response = await request.safePostRequest(url, ktuvitConfig.GET_HEADERS(), query, "Ktuvit");
-    const responseData = await response.body.json();
+    while (true) {
+        const query = {
+            request: {
+                Actors: [],
+                Countries: [],
+                Directors: [],
+                FilmName: imdbData.name,
+                Genres: [],
+                Languages: [],
+                Page: page,
+                Rating: [],
+                SearchType: imdbData.type,
+                Studios: null,
+                WithSubsOnly: false,
+                Year: "",
+            },
+        };
 
-    const ktuvitResults = JSON.parse(responseData.d).Films;
-    const ktuvitID = ktuvitResults.find((result) => extractIMDbID(result.IMDB_Link) === imdbData.imdbID)?.ID;
+        const url = ktuvitApi.SEARCH_URL;
+        const response = await request.safePostRequest(url, ktuvitConfig.GET_HEADERS(), query, "Ktuvit");
+        const responseData = await response.body.json();
 
-    return ktuvitID;
+        const ktuvitResults = JSON.parse(responseData.d).Films;
+        const ktuvitID = ktuvitResults.find((result) => extractIMDbID(result.IMDB_Link) === imdbData.imdbID)?.ID;
+
+        if (ktuvitID) return ktuvitID;
+        if (ktuvitResults.length < 20) break;
+
+        page++;
+    }
+
+    throw new Error(`Ktuvit ID Doesn't Exist for Imdb=${imdbData.imdbID}`);
 };
 
 const extractSubtitlesFromHTML = (html, isMovie) => {
