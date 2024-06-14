@@ -9,15 +9,16 @@ const fetchSubtitles = async (imdbID, season, episode) => {
     const response = await request.safeGetRequest(url, osConfig.GET_HEADERS, "OS");
     const responseBody = await response.body.json();
 
-    const osSubtitles = responseBody.data;
+    let osSubtitles = responseBody.data;
     osSubtitles.forEach((s) => {
-        s.id = s.attributes.files[0].file_id;
+        s.id = s.attributes.files[0]?.file_id;
         s.name = s.attributes.release;
 
         s.imdbID = imdbID;
         s.season = season;
         s.episode = episode;
     });
+    osSubtitles = osSubtitles.filter((s) => s.id !== undefined);
 
     return osSubtitles;
 };
