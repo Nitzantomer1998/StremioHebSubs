@@ -17,7 +17,7 @@ const getKtuvitID = async (imdbID, isMovie) => {
 
     const imdbData = {
         imdbID,
-        name: transliteration.transliterate(isMovie ? responseData.movie_results[0].title : responseData.tv_results[0].name),
+        name: transliteration.transliterate(isMovie ? responseData.movie_results[0]?.title : responseData.tv_results[0]?.name),
         type: isMovie ? "0" : "1",
     };
 
@@ -28,6 +28,7 @@ const getKtuvitID = async (imdbID, isMovie) => {
 
 const searchKtuvit = async (imdbData) => {
     let page = 1;
+    let ktuvitID;
 
     while (true) {
         const query = {
@@ -52,15 +53,15 @@ const searchKtuvit = async (imdbData) => {
         const responseData = await response.body.json();
 
         const ktuvitResults = JSON.parse(responseData.d).Films;
-        const ktuvitID = ktuvitResults.find((result) => extractIMDbID(result.IMDB_Link) === imdbData.imdbID)?.ID;
+        ktuvitID = ktuvitResults.find((result) => extractIMDbID(result.IMDB_Link) === imdbData.imdbID)?.ID;
 
-        if (ktuvitID) return ktuvitID;
+        if (ktuvitID) break;
         if (ktuvitResults.length < 20) break;
 
         page++;
     }
 
-    throw new Error(`Ktuvit ID Doesn't Exist for Imdb=${imdbData.imdbID}`);
+    return ktuvitID;
 };
 
 const extractSubtitlesFromHTML = (html, isMovie) => {
