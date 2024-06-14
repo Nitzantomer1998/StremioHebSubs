@@ -14,7 +14,7 @@ const safeGetRequest = async (url, headers, provider, tries = 2) => {
         if (response.statusCode === 200) break;
     }
 
-    if (response.statusCode !== 200) throw new Error(`${provider} safeGetRequest - Code=${response.statusCode}, Message=${response.message}`);
+    if (response.statusCode !== 200) throw new Error(`${provider} safeGetRequest - Code=${response.statusCode}, Message=${(await response.body.json()).errors[0]}`);
     return response;
 };
 
@@ -27,7 +27,7 @@ const safeGetBufferRequest = async (url, headers, provider, tries = 2) => {
         if (response.statusCode === 200) break;
     }
 
-    if (response.statusCode !== 200) throw new Error(`${provider} safeGetBufferRequest - Code=${response.statusCode}, Message=${response.message}`);
+    if (response.statusCode !== 200) throw new Error(`${provider} safeGetBufferRequest - Code=${response.statusCode}, Message=${(await response.body.json()).errors[0]}`);
     return response;
 };
 
@@ -41,7 +41,7 @@ const safePostRequest = async (url, headers, body, provider, tries = 2) => {
 
     }
 
-    if (response.statusCode !== 200) throw new Error(`${provider} safePostRequest - Code=${response.statusCode}, Message=${response.message}`);
+    if (response.statusCode !== 200) throw new Error(`${provider} safePostRequest - Code=${response.statusCode}, Message=${(await response.body.json()).errors[0]}`);
     return response;
 };
 
