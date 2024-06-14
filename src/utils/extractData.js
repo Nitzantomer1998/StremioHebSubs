@@ -9,11 +9,9 @@ const extractData = (params) => {
     const [imdbID, season, episode] = extractCompoundID(compoundID);
     const filename = extractFilename(extraArgs);
     const userConfig = extractUserConfig(encodedUserConfig);
+    const isValid = dataValidation(contentType, imdbID, season, episode);
 
-    const valid = dataValidation(contentType, imdbID, season, episode);
-    if (valid === false) throw new Error(`Invalid Data: ContentType=${contentType}, imdbID=${imdbID}, season=${season}, episode=${episode}`);
-
-    return { userConfig, imdbID, season, episode, filename };
+    return { isValid, userConfig, imdbID, season, episode, filename };
 };
 
 
