@@ -18,10 +18,10 @@ const convertSubtitle = (subtitleContent) => {
 const detectSubtitleFormat = (subtitleContent) => {
     subtitleContent = subtitleContent.trim();
 
-    if (/^WEBVTT/.test(subtitleContent)) return "vtt";
-    if (/^\{\d+\}\{\d+\}/.test(subtitleContent)) return "sub";
-    if (/^\[Script Info\]/.test(subtitleContent)) return "ass"; //this will identify also ssa, need to see for better way
-    if (/^\d+\r\n\d+:\d+:\d+,\d+ --> \d+:\d+:\d+,\d+/.test(subtitleContent)) return "srt";
+    if (/^\{\d+(.\d+)?\}\{\d+(.\d+)?\}(.*)/.test(subtitleContent)) return "sub";
+    if (/^[\s\r\n]*WEBVTT\r?\n/g.test(subtitleContent)) return "vtt";
+    if (/^[\s\r\n]*\[Script Info\]\r?\n/g.test(subtitleContent) && /[\s\r\n]*\[Events\]\r?\n/g.test(subtitleContent)) return "ass"; //this will identify also ssa, need to see for better way
+    if (/\d+\r?\n\d{1,2}:\d{1,2}:\d{1,2}([.,]\d{1,3})?\s*\-\-\>\s*\d{1,2}:\d{1,2}:\d{1,2}([.,]\d{1,3})?/g.test(subtitleContent)) return "srt";
 
     return "unknown";
 };
