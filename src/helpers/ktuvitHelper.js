@@ -4,13 +4,13 @@ import ktuvitApi from "../apis/ktuvitApi.js";
 import tmdbApi from "../apis/tmdbApi.js";
 import ktuvitConfig from "../configs/ktuvitConfig.js";
 import tmdbConfig from "../configs/tmdbConfig.js";
+import httpService from "../services/httpService.js";
 import extractHtmlContent from "../utils/extractHtmlContent.js";
-import request from "../utils/request.js";
 
 
 const getKtuvitID = async (imdbID, isMovie) => {
     const tmdbUrl = `${tmdbApi.SEARCH_URL}/${imdbID}?api_key=${tmdbConfig.API_KEY}&external_source=imdb_id`;
-    const tmdbResponse = await request.safeGetRequest(tmdbUrl, {}, "Ktuvit");
+    const tmdbResponse = await httpService.safeGethttpService(tmdbUrl, {}, "Ktuvit");
     const responseData = await tmdbResponse.body.json();
 
     const imdbData = {
@@ -26,7 +26,7 @@ const getKtuvitID = async (imdbID, isMovie) => {
 
 const searchKtuvit = async (imdbData, isMovie) => {
     const query = {
-        request: {
+        httpService: {
             Actors: [],
             Countries: [],
             Directors: [],
@@ -43,7 +43,7 @@ const searchKtuvit = async (imdbData, isMovie) => {
     };
 
     const url = ktuvitApi.SEARCH_URL;
-    const response = await request.safePostRequest(url, ktuvitConfig.GET_HEADERS(), query, "Ktuvit");
+    const response = await httpService.safePosthttpService(url, ktuvitConfig.GET_HEADERS(), query, "Ktuvit");
     const responseData = await response.body.json();
 
     const ktuvitResults = JSON.parse(responseData.d).Films;
@@ -77,7 +77,7 @@ const extractIMDbID = (url) => {
 
 const updateCookie = async () => {
     const url = ktuvitApi.LOGIN_URL;
-    const response = await request.safePostRequest(url, { "Content-Type": "application/json" }, { request: { Email: ktuvitConfig.USERNAME, Password: ktuvitConfig.PASSWORD } }, "Ktuvit");
+    const response = await httpService.safePosthttpService(url, { "Content-Type": "application/json" }, { httpService: { Email: ktuvitConfig.USERNAME, Password: ktuvitConfig.PASSWORD } }, "Ktuvit");
 
     ktuvitConfig.UPDATE_COOKIE(response.headers["set-cookie"]);
 };
