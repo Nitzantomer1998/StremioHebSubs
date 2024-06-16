@@ -39,7 +39,7 @@ const mapSubtitlesToStremio = (subtitles) => {
 
 const extractSubtitle = async (subtitleID) => {
     const url = osApi.DOWNLOAD_URL;
-    const linkResponse = await request.safePostRequest(url, osConfig.POST_HEADERS(), { file_id: subtitleID }, "OS");
+    const linkResponse = await request.safePostRequest(url, osConfig.POST_HEADERS(), { file_id: subtitleID, sub_format: "srt" }, "OS");
     const responseBody = await linkResponse.body.json();
     const subtitleLink = responseBody.link;
 
