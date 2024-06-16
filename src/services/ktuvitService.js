@@ -51,6 +51,7 @@ const extractSubtitle = async (subtitleID) => {
     const subtitleBuffer = await downloadResponse.body.arrayBuffer();
 
     const decodedContent = await decodeSubtitle(subtitleBuffer);
+    if (decodedContent === "הבקשה לא נמצאה, נא לנסות להוריד את הקובץ בשנית") throw new Error("Ktuvit Failed to Download Subtitle");
     const convertedContent = convertSubtitle(decodedContent);
 
     return convertedContent;
