@@ -3,7 +3,7 @@ import AdmZip from "adm-zip";
 import wizdomApi from "../apis/wizdomApi.js";
 import baseConfig from "../configs/baseConfig.js";
 import httpService from "./httpService.js";
-import convertSubtitle from "../utils/convertSubtitle.js";
+import subtitleService from "./subtitleService.js";
 import decodeSubtitle from "../utils/decodeSubtitle.js";
 
 
@@ -46,7 +46,7 @@ const extractSubtitle = async (subtitleID) => {
     const content = fileEntry.getData().toString();
 
     const decodedContent = await decodeSubtitle(content);
-    const convertedContent = convertSubtitle(decodedContent);
+    const convertedContent = subtitleService(decodedContent);
 
     return convertedContent;
 };

@@ -2,7 +2,7 @@ import osApi from "../apis/osApi.js";
 import baseConfig from "../configs/baseConfig.js";
 import osConfig from "../configs/osConfig.js";
 import httpService from "./httpService.js";
-import convertSubtitle from "../utils/convertSubtitle.js";
+import subtitleService from "./subtitleService.js";
 import decodeSubtitle from "../utils/decodeSubtitle.js";
 
 
@@ -47,7 +47,7 @@ const extractSubtitle = async (subtitleID) => {
     const subtitleContent = await subtitleResponse.body.text();
 
     const decodedContent = await decodeSubtitle(subtitleContent);
-    const convertedContent = convertSubtitle(decodedContent);
+    const convertedContent = subtitleService(decodedContent);
 
     return convertedContent;
 };

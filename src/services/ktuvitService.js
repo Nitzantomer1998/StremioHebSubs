@@ -3,7 +3,7 @@ import baseConfig from "../configs/baseConfig.js";
 import ktuvitConfig from "../configs/ktuvitConfig.js";
 import ktuvitHelper from "../helpers/ktuvitHelper.js";
 import httpService from "./httpService.js";
-import convertSubtitle from "../utils/convertSubtitle.js";
+import subtitleService from "./subtitleService.js";
 import decodeSubtitle from "../utils/decodeSubtitle.js";
 
 
@@ -52,7 +52,7 @@ const extractSubtitle = async (subtitleID) => {
 
     const decodedContent = await decodeSubtitle(subtitleBuffer);
     if (decodedContent === "הבקשה לא נמצאה, נא לנסות להוריד את הקובץ בשנית") throw new Error("Ktuvit Failed to Download Subtitle");
-    const convertedContent = convertSubtitle(decodedContent);
+    const convertedContent = subtitleService(decodedContent);
 
     return convertedContent;
 };
