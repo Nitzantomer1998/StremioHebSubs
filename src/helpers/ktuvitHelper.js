@@ -1,5 +1,3 @@
-import chardet from "chardet";
-import iconv from "iconv-lite";
 import transliteration from "transliteration";
 
 import ktuvitApi from "../apis/ktuvitApi.js";
@@ -71,14 +69,6 @@ const extractSubtitlesFromHTML = (html, isMovie) => {
     return extractedSubtitles;
 };
 
-const decodeSubtitle = async (subtitleBuffer) => {
-    const bufferArray = Buffer.from(subtitleBuffer);
-    const detectedEncoding = chardet.detect(bufferArray);
-    const decodeSubtitleContent = iconv.decode(bufferArray, detectedEncoding);
-
-    return decodeSubtitleContent;
-};
-
 const extractIMDbID = (url) => {
     const match = url.match(/tt\d+/);
 
@@ -98,7 +88,6 @@ await updateCookie();
 const ktuvitHelper = {
     getKtuvitID,
     extractSubtitlesFromHTML,
-    decodeSubtitle,
 };
 
 
