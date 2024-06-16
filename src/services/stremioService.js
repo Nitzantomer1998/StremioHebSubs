@@ -11,7 +11,7 @@ const getSubtitlesList = async (userConfig, imdbID, season, episode) => {
     const subtitlePromises = userConfig.map(provider => subtitleProviders[provider].getSubtitlesList(imdbID, season, episode));
     const subtitlesArray = await Promise.all(subtitlePromises);
 
-    subtitlesArray.forEach(providerSubtitles => mergeSubtitles(subtitles, providerSubtitles));
+    subtitlesArray.forEach(providerSubtitles => subtitles.push(...providerSubtitles));
 
     return subtitles;
 };
@@ -33,10 +33,6 @@ const sortSubtitlesByFilename = (subtitles, filename) => {
     subtitles.sort((a, b) => b.score - a.score);
 
     return subtitles;
-};
-
-const mergeSubtitles = (subtitles, providerSubtitles) => {
-    subtitles.push(...providerSubtitles.filter(sub => !subtitles.some(s => s.id === sub.id)));
 };
 
 const subtitleProviders = {
