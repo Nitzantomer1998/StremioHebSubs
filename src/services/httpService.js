@@ -5,7 +5,7 @@ const get = async (url, headers = {}) => await undici.request(url, { headers, ma
 const getBuffer = async (url, headers = {}) => await undici.request(url, { headers, maxRedirections: 10 });
 const post = async (url, headers = {}, body = {}) => await undici.request(url, { method: "POST", headers, body: Buffer.from(JSON.stringify(body)), maxRedirections: 10 });
 
-const safeGetRequest = async (url, headers, provider, tries = 2) => {
+const safeGethttpService = async (url, headers, provider, tries = 2) => {
     let response;
 
     while (tries--) {
@@ -14,11 +14,11 @@ const safeGetRequest = async (url, headers, provider, tries = 2) => {
         if (response.statusCode === 200) break;
     }
 
-    if (response.statusCode !== 200) throw new Error(`${provider} safeGetRequest - Code=${response.statusCode}, Message=${(await response.body.json()).errors[0]}`);
+    if (response.statusCode !== 200) throw new Error(`${provider} safeGethttpService - Code=${response.statusCode}, Message=${(await response.body.json()).errors[0]}`);
     return response;
 };
 
-const safeGetBufferRequest = async (url, headers, provider, tries = 2) => {
+const safeGetBufferhttpService = async (url, headers, provider, tries = 2) => {
     let response;
 
     while (tries--) {
@@ -27,11 +27,11 @@ const safeGetBufferRequest = async (url, headers, provider, tries = 2) => {
         if (response.statusCode === 200) break;
     }
 
-    if (response.statusCode !== 200) throw new Error(`${provider} safeGetBufferRequest - Code=${response.statusCode}, Message=${(await response.body.json()).errors[0]}`);
+    if (response.statusCode !== 200) throw new Error(`${provider} safeGetBufferhttpService - Code=${response.statusCode}, Message=${(await response.body.json()).errors[0]}`);
     return response;
 };
 
-const safePostRequest = async (url, headers, body, provider, tries = 2) => {
+const safePosthttpService = async (url, headers, body, provider, tries = 2) => {
     let response;
 
     while (tries--) {
@@ -41,15 +41,15 @@ const safePostRequest = async (url, headers, body, provider, tries = 2) => {
 
     }
 
-    if (response.statusCode !== 200) throw new Error(`${provider} safePostRequest - Code=${response.statusCode}, Message=${(await response.body.json()).errors[0]}`);
+    if (response.statusCode !== 200) throw new Error(`${provider} safePosthttpService - Code=${response.statusCode}, Message=${(await response.body.json()).errors[0]}`);
     return response;
 };
 
-const request = {
-    safeGetRequest,
-    safeGetBufferRequest,
-    safePostRequest,
+const httpService = {
+    safeGethttpService,
+    safeGetBufferhttpService,
+    safePosthttpService,
 };
 
 
-export default request;
+export default httpService;
