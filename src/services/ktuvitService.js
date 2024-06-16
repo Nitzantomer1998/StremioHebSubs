@@ -2,6 +2,8 @@ import ktuvitApi from "../apis/ktuvitApi.js";
 import baseConfig from "../configs/baseConfig.js";
 import ktuvitConfig from "../configs/ktuvitConfig.js";
 import ktuvitHelper from "../helpers/ktuvitHelper.js";
+import convertSubtitle from "../utils/convertSubtitle.js";
+import decodeSubtitle from "../utils/decodeSubtitle.js";
 import request from "../utils/request.js";
 
 
@@ -47,9 +49,11 @@ const extractSubtitle = async (subtitleID) => {
     const downloadUrl = `${ktuvitApi.DOWNLOAD_URL}DownloadIdentifier=${identifier}`;
     const downloadResponse = await request.safeGetBufferRequest(downloadUrl, ktuvitConfig.GET_HEADERS(), "Ktuvit");
     const subtitleBuffer = await downloadResponse.body.arrayBuffer();
-    const subtitleContent = await ktuvitHelper.decodeSubtitle(subtitleBuffer);
 
-    return subtitleContent;
+    const decodedContent = await decodeSubtitle(subtitleBuffer);
+    const convertedContent = convertSubtitle(decodedContent);
+
+    return convertedContent;
 };
 
 const ktuvitService = {

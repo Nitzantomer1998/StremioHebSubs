@@ -2,6 +2,8 @@ import AdmZip from "adm-zip";
 
 import wizdomApi from "../apis/wizdomApi.js";
 import baseConfig from "../configs/baseConfig.js";
+import convertSubtitle from "../utils/convertSubtitle.js";
+import decodeSubtitle from "../utils/decodeSubtitle.js";
 import request from "../utils/request.js";
 
 
@@ -40,10 +42,13 @@ const extractSubtitle = async (subtitleID) => {
 
     const zip = new AdmZip(Buffer.from(data));
     const zipEntries = zip.getEntries();
-    const fileEntry = zipEntries.find(entry => [".srt", ".str"].some(extention => entry.entryName.endsWith(extention)));
+    const fileEntry = zipEntries[zipEntries.length - 1];
+    const content = fileEntry.getData().toString();
 
-    if (fileEntry === undefined) throw new Error("Subtitle File Extension Not Supported");
-    return fileEntry.getData().toString("utf8");
+    const decodedContent = await decodeSubtitle(content);
+    const convertedContent = convertSubtitle(decodedContent);
+
+    return convertedContent;
 };
 
 const wizdomService = {
