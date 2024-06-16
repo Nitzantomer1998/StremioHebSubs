@@ -5,6 +5,9 @@ import stremioRoute from "./routes/stremioRoute.js";
 import loggerService from "./services/loggerService.js";
 
 
-const app = express();
-app.use("/", stremioRoute);
-app.listen(baseConfig.PORT, () => { loggerService.logExpress(); });
+const addon = express();
+addon.use("/", stremioRoute);
+addon.listen(baseConfig.PORT, () => { loggerService.logExpress(); });
+
+
+export default addon;
