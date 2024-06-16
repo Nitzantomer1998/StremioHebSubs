@@ -1,7 +1,7 @@
 import osApi from "../apis/osApi.js";
 import baseConfig from "../configs/baseConfig.js";
 import osConfig from "../configs/osConfig.js";
-import httpService from "../services/httpService.js";
+import httpService from "./httpService.js";
 import convertSubtitle from "../utils/convertSubtitle.js";
 import decodeSubtitle from "../utils/decodeSubtitle.js";
 

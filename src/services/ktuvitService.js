@@ -2,7 +2,7 @@ import ktuvitApi from "../apis/ktuvitApi.js";
 import baseConfig from "../configs/baseConfig.js";
 import ktuvitConfig from "../configs/ktuvitConfig.js";
 import ktuvitHelper from "../helpers/ktuvitHelper.js";
-import httpService from "../services/httpService.js";
+import httpService from "./httpService.js";
 import convertSubtitle from "../utils/convertSubtitle.js";
 import decodeSubtitle from "../utils/decodeSubtitle.js";
 
