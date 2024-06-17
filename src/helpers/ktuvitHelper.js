@@ -12,30 +12,23 @@ const getKtuvitID = async (imdbID, isMovie) => {
     const tmdbUrl = `${tmdbApi.SEARCH_URL}/${imdbID}?api_key=${tmdbConfig.API_KEY}&external_source=imdb_id`;
     const tmdbResponse = await httpService.safeGethttpService(tmdbUrl, {}, "Ktuvit");
     const responseData = await tmdbResponse.body.json();
-
-    const imdbData = {
-        imdbID,
-        name: transliteration.transliterate(isMovie ? responseData.movie_results[0]?.title : responseData.tv_results[0]?.name),
-        type: isMovie ? "0" : "1",
-    };
-
-    const ktuvitID = await searchKtuvit(imdbData, isMovie);
+    const ktuvitID = await searchKtuvit(responseData, imdbID, isMovie);
 
     return ktuvitID;
 };
 
-const searchKtuvit = async (imdbData, isMovie) => {
+const searchKtuvit = async (data, imdbID, isMovie) => {
     const query = {
         httpService: {
             Actors: [],
             Countries: [],
             Directors: [],
-            FilmName: imdbData.name,
+            FilmName: transliteration.transliterate(isMovie ? data.movie_results[0]?.title : data.tv_results[0]?.name),
             Genres: [],
             Languages: [],
             Page: 1,
             Rating: [],
-            SearchType: imdbData.type,
+            SearchType: isMovie ? "0" : "1",
             Studios: null,
             WithSubsOnly: isMovie,
             Year: "",
@@ -47,7 +40,7 @@ const searchKtuvit = async (imdbData, isMovie) => {
     const responseData = await response.body.json();
 
     const ktuvitResults = JSON.parse(responseData.d).Films;
-    const ktuvitID = ktuvitResults.find((result) => extractIMDbID(result.IMDB_Link) === imdbData.imdbID)?.ID;
+    const ktuvitID = ktuvitResults.find((result) => result.IMDB_Link.match(/tt\d+/)[0] === imdbID)?.ID;
 
     return ktuvitID;
 };
@@ -59,6 +52,7 @@ const extractSubtitlesFromHTML = (html, isMovie) => {
 
     const tableRows = extractHtmlContent.many(html, tableRowsRegex);
     const filteredTableRows = isMovie ? tableRows.slice(1) : tableRows;
+
     const extractedSubtitles = filteredTableRows.map((row) => {
         const subtitleID = extractHtmlContent.single(row, idRegex)?.[1];
         const subtitleName = extractHtmlContent.single(row, nameRegex)?.[1]?.trim();
@@ -69,21 +63,7 @@ const extractSubtitlesFromHTML = (html, isMovie) => {
     return extractedSubtitles;
 };
 
-const extractIMDbID = (url) => {
-    const match = url.match(/tt\d+/);
 
-    return match ? match[0] : null;
-};
-
-const updateCookie = async () => {
-    const url = ktuvitApi.LOGIN_URL;
-    const response = await httpService.safePosthttpService(url, { "Content-Type": "application/json" }, { httpService: { Email: ktuvitConfig.USERNAME, Password: ktuvitConfig.PASSWORD } }, "Ktuvit");
-
-    ktuvitConfig.UPDATE_COOKIE(response.headers["set-cookie"]);
-};
-
-setInterval(updateCookie, ktuvitConfig.COOKIE_REFRESH_INTERVAL);
-await updateCookie();
 
 const ktuvitHelper = {
     getKtuvitID,
