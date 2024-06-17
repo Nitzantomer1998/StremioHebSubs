@@ -64,7 +64,6 @@ const extractSubtitlesFromHTML = (html, isMovie) => {
 };
 
 
-
 const ktuvitHelper = {
     getKtuvitID,
     extractSubtitlesFromHTML,
