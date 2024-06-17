@@ -10,7 +10,7 @@ const fetchSubtitles = async (imdbID, season, episode) => {
     const ktuvitID = await ktuvitHelper.getKtuvitID(imdbID, season === "0");
 
     const url = season === "0" ? `${ktuvitApi.MOVIES_URL}ID=${ktuvitID}` : `${ktuvitApi.SERIES_URL}SeriesID=${ktuvitID}&Season=${season}&Episode=${episode}`;
-    const response = await httpService.safeGethttpService(url, ktuvitConfig.GET_HEADERS(), "Ktuvit");
+    const response = await httpService.safeGetRequest(url, ktuvitConfig.GET_HEADERS(), "Ktuvit");
     const responseHTML = await response.body.text();
 
     const ktuvitSubtitles = ktuvitHelper.extractSubtitlesFromHTML(responseHTML, season === "0");
@@ -41,15 +41,17 @@ const extractSubtitle = async (subtitleID) => {
     const [ktuvitID, subID] = subtitleID.split("-");
 
     const identifierUrl = ktuvitApi.DOWNLOAD_IDENTIFIER_URL;
-    const identifierResponse = await httpService.safePosthttpService(identifierUrl, ktuvitConfig.GET_HEADERS(), { httpService: { FilmID: ktuvitID, SubtitleID: subID, FontColor: "", FontSize: 0, PredefinedLayout: -1 } }, "Ktuvit");
+    const identifierResponse = await httpService.safePostRequest(identifierUrl, ktuvitConfig.GET_HEADERS(), { httpService: { FilmID: ktuvitID, SubtitleID: subID, FontColor: "", FontSize: 0, PredefinedLayout: -1 } }, "Ktuvit");
     const identifierResponseData = await identifierResponse.body.json();
     const identifier = JSON.parse(identifierResponseData.d).DownloadIdentifier;
 
     const downloadUrl = `${ktuvitApi.DOWNLOAD_URL}DownloadIdentifier=${identifier}`;
-    const downloadResponse = await httpService.safeGetBufferhttpService(downloadUrl, ktuvitConfig.GET_HEADERS(), "Ktuvit");
+    const downloadResponse = await httpService.safeGetBufferRequest(downloadUrl, ktuvitConfig.GET_HEADERS(), "Ktuvit");
     const subtitleBuffer = await downloadResponse.body.arrayBuffer();
 
+    console.log(ktuvitConfig.GET_HEADERS());
     const decodedContent = await subtitleService.decodeSubtitle(subtitleBuffer);
+    console.log(decodedContent);
     if (decodedContent === "הבקשה לא נמצאה, נא לנסות להוריד את הקובץ בשנית") throw new Error("Ktuvit Failed to Download Subtitle");
     const convertedContent = subtitleService.convertSubtitle(decodedContent);
 
