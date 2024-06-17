@@ -4,7 +4,6 @@ import ktuvitConfig from "../configs/ktuvitConfig.js";
 import ktuvitHelper from "../helpers/ktuvitHelper.js";
 import httpService from "./httpService.js";
 import subtitleService from "./subtitleService.js";
-import decodeSubtitle from "../utils/decodeSubtitle.js";
 
 
 const fetchSubtitles = async (imdbID, season, episode) => {
@@ -50,9 +49,9 @@ const extractSubtitle = async (subtitleID) => {
     const downloadResponse = await httpService.safeGetBufferhttpService(downloadUrl, ktuvitConfig.GET_HEADERS(), "Ktuvit");
     const subtitleBuffer = await downloadResponse.body.arrayBuffer();
 
-    const decodedContent = await decodeSubtitle(subtitleBuffer);
+    const decodedContent = await subtitleService.decodeSubtitle(subtitleBuffer);
     if (decodedContent === "הבקשה לא נמצאה, נא לנסות להוריד את הקובץ בשנית") throw new Error("Ktuvit Failed to Download Subtitle");
-    const convertedContent = subtitleService(decodedContent);
+    const convertedContent = subtitleService.convertSubtitle(decodedContent);
 
     return convertedContent;
 };

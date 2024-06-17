@@ -4,7 +4,6 @@ import wizdomApi from "../apis/wizdomApi.js";
 import baseConfig from "../configs/baseConfig.js";
 import httpService from "./httpService.js";
 import subtitleService from "./subtitleService.js";
-import decodeSubtitle from "../utils/decodeSubtitle.js";
 
 
 const fetchSubtitles = async (imdbID, season, episode) => {
@@ -45,8 +44,8 @@ const extractSubtitle = async (subtitleID) => {
     const fileEntry = zipEntries[zipEntries.length - 1];
     const content = fileEntry.getData().toString();
 
-    const decodedContent = await decodeSubtitle(content);
-    const convertedContent = subtitleService(decodedContent);
+    const decodedContent = await subtitleService.decodeSubtitle(content);
+    const convertedContent = subtitleService.convertSubtitle(decodedContent);
 
     return convertedContent;
 };

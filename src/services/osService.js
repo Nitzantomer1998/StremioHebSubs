@@ -3,7 +3,6 @@ import baseConfig from "../configs/baseConfig.js";
 import osConfig from "../configs/osConfig.js";
 import httpService from "./httpService.js";
 import subtitleService from "./subtitleService.js";
-import decodeSubtitle from "../utils/decodeSubtitle.js";
 
 
 const fetchSubtitles = async (imdbID, season, episode) => {
@@ -46,8 +45,8 @@ const extractSubtitle = async (subtitleID) => {
     const subtitleResponse = await httpService.safeGethttpService(subtitleLink, osConfig.GET_HEADERS, "OS");
     const subtitleContent = await subtitleResponse.body.text();
 
-    const decodedContent = await decodeSubtitle(subtitleContent);
-    const convertedContent = subtitleService(decodedContent);
+    const decodedContent = await subtitleService.decodeSubtitle(subtitleContent);
+    const convertedContent = subtitleService.convertSubtitle(decodedContent);
 
     return convertedContent;
 };
