@@ -3,8 +3,7 @@
 
 <div>
     <img src="https://www.stremio.com/website/stremio-logo-small.png" style="width: 100px; height: 100px;">
-    <img src="https://i.ibb.co/KLYK0TH/wizdon256.png" style="width: 110px; height: 110x;">
-    <img src="https://www.opensubtitles.com/assets/opensubtitles-beta-logo-8f6b0c6dc297bbcce8d571e61f951d14dab0a18a944fce0f7f706b976934955f.png" style="width: 250px; height: 100px;">
+    <img src="./public/icons/icon.svg" style="width: 110px; height: 110x;">
 </div>
 
 <h2>Stremio & HebSub: The Dual Powerhouses!</h2>
@@ -21,19 +20,19 @@
 <h2>Effortless Entertainment: Hebrew Made Easy</h2>
 <ul>
     <li>
-        <b>Free to Use</b>: No hidden costs, enjoy the addon without any charges.
-    </li>
-    <li>
         <b>Perfect Match Subtitles</b>: Subtitles are sorted by their percentage match to the watched content, with the most compatible ones listed first.
     </li>
     <li>
         <b>Detailed Subtitle Info</b>: Hover over a subtitle to see its match percentage, source, and name.
     </li>
     <li>
-        <b>Optimized for Performance</b>: Smooth and efficient, ensuring a seamless viewing experience.
+        <b>Subtitle Formats Support</b>: Supports a wide range of subtitle formats, that even Stremio doesn't.
     </li>
     <li>
        <b>User Preferences</b>: Tailor your experience by selecting your preferred subtitle sources from top-notch providers.
+    </li>
+    <li>
+        <b>Optimized for Performance</b>: Smooth and efficient, ensuring a seamless viewing experience.
     </li>
     <li>
         <b>Ongoing Development</b>: Continuous updates with plans for integrating additional subtitle websites.
@@ -53,7 +52,7 @@
                 <b>Via Stremio</b>: Navigate to the addon center and search <b>Heb Subs</b>.
             </li>
             <li>
-                <b>Via Link</b>: Enter the following URL: <b>`stremio://https://ec2-18-196-63-110.eu-central-1.compute.amazonaws.com/manifest.json`.</b>.
+                <b>Via Link</b>: Enter the following URL: <b>`https://stremio-heb-subs.onrender.com/configure`</b>.
             </li>
         </ol>
     </li>
