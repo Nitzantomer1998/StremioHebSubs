@@ -3,7 +3,7 @@ const convertAssToSrt = (content) => {
     let eventCount = 0;
 
     const lines = content.split("\n");
-    const dialoguePattern = /Dialogue: \d+,(\d+:\d+:\d+\.\d+),(\d+:\d+:\d+\.\d+),.*,,\d+,\d+,\d+,,(.*)/;
+    const dialoguePattern = /^Dialogue: \d+,(\d+:\d+:\d+\.\d+),(\d+:\d+:\d+\.\d+),.*,,\d+,\d+,\d+,,(.*)/;
 
     lines.forEach(line => {
         const match = dialoguePattern.exec(line);

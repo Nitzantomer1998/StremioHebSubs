@@ -2,18 +2,15 @@ import chardet from "chardet";
 import iconv from "iconv-lite";
 
 import subtitleConfig from "../configs/subtitleConfig.js";
-import loggerService from "./loggerService.js";
 
 
 const convertSubtitle = (subtitleContent) => {
     const subtitleFormat = detectSubtitleFormat(subtitleContent);
 
     if (subtitleConfig.supportedSubtitleFormats.includes(subtitleFormat)) return subtitleContent;
-    if (subtitleConfig.customSubtitleFormats.includes(subtitleFormat)) return subtitleConfig.subtitleConverter[subtitleFormat](subtitleContent);
-    if (subtitleConfig.unsupportedSubtitleFormats.includes(subtitleFormat)) return "";
-
-    loggerService.logError(`Unsupported Subtitle Format: ${subtitleFormat}`);
-    return "";
+    else if (subtitleConfig.unsupportedSubtitleFormats.includes(subtitleFormat)) return subtitleConfig.defaultSubtitleContent;
+    else if (subtitleConfig.customSubtitleFormats.includes(subtitleFormat)) return subtitleConfig.subtitleConverter[subtitleFormat](subtitleContent);
+    else throw new Error(`Unsupported Subtitle Format: ${subtitleFormat}`);
 };
 
 const detectSubtitleFormat = (subtitleContent) => {
