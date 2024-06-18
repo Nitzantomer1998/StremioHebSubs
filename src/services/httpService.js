@@ -28,7 +28,6 @@ const safeGetBufferRequest = async (url, headers, provider, tries = 2) => {
     }
 
     if (response.statusCode !== 200) throw new Error(`${provider} safeGetBufferRequest - Code=${response.statusCode}, Message=${(await response.body?.json())?.errors?.[0]}`);
-    console.log(100);
     return response;
 };
 
