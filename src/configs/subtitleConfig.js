@@ -9,7 +9,7 @@ const unsupportedSubtitleFormats = ["sub"];
 
 const subtitleFormatsRegex = {
     srt: /^(\d+)(\s*)(\d{2}:\d{2}:\d{2},\d{3})(\s*-->\s*)(\d{2}:\d{2}:\d{2},\d{3})/,
-    vtt: /^(WEBVTT)/,
+    vtt: /^(\d+)(\s*)(\d{2}:\d{2}:\d{2}\.\d{3})(\s*-->\s*)(\d{2}:\d{2}:\d{2}\.\d{3})/,
     ass: /^[\s\r\n]*\[Script Info\]\r?\n.*[\s\r\n]*\[Events\]\r?\n/g,
     sub: /^(\{\d+\})(\{\d+\})/,
 };
