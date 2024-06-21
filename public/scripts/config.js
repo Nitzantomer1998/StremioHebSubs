@@ -31,8 +31,5 @@ const saveConfig = () => {
     window.open(`stremio://${stremioLink}`, "_blank");
 };
 
-const redirectToIssuePage = () => { window.open("https://github.com/Nitzantomer1998/StremioHebSubs/issues", "_blank"); };
-
 
 window.saveConfig = saveConfig;
-window.redirectToIssuePage = redirectToIssuePage;
