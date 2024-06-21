@@ -1,10 +1,10 @@
-const divideSubtitle = (text, maxLength = 10000) => {
+const divideSubtitle = (text, maxLength = 9000) => {
     const words = text.split(" ");
     const chunks = [];
     let chunk = "";
 
     for (const word of words) {
-        if (chunk.length + word.length < maxLength) chunk += (chunk.length ? " " : "") + word;
+        if (chunk.length + word.length + 1 < maxLength) chunk += (chunk.length ? " " : "") + word;
         else { chunks.push(chunk); chunk = word; }
     }
 
