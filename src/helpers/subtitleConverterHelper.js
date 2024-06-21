@@ -1,5 +1,5 @@
 const convertAssToSrt = (content) => {
-    let srtContent = "";
+    const srtLines = [];
     let eventCount = 0;
 
     const lines = content.split("\n");
@@ -15,11 +15,11 @@ const convertAssToSrt = (content) => {
             const endTime = match[2].replace(".", ",");
             const dialogueText = match[3].replace(/\\N/g, "\n");
 
-            srtContent += `${eventCount}\n${startTime} --> ${endTime}\n${dialogueText}\n\n`;
+            srtLines.push(`${eventCount}\n${startTime} --> ${endTime}\n${dialogueText}\n`);
         }
     });
 
-    return srtContent.trim();
+    return srtLines.join("\n").trim();
 };
 
 const subtitleConverterHelper = {
