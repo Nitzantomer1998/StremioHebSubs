@@ -1,4 +1,5 @@
 import ktuvitController from "../controllers/ktuvitController.js";
+import mtController from "../controllers/mtController.js";
 import osController from "../controllers/osController.js";
 import wizdomController from "../controllers/wizdomController.js";
 import stringSimilarity from "../utils/stringSimilarity.js";
@@ -39,6 +40,7 @@ const subtitleProviders = {
     Wizdom: wizdomController,
     OS: osController,
     Ktuvit: ktuvitController,
+    MT: mtController,
 };
 
 Object.keys(subtitleProviders).forEach(provider => {
