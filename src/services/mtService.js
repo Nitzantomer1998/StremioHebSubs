@@ -10,7 +10,7 @@ const fetchSubtitles = async (imdbID, season, episode) => {
     const response = await httpService.safeGetRequest(url, osConfig.GET_HEADERS, "OS");
     const responseBody = await response.body.json();
 
-    const osSubtitles = responseBody.data;
+    let osSubtitles = responseBody.data;
     osSubtitles.forEach((s) => {
         s.id = s.attributes.files[0]?.file_id;
         s.name = s.attributes.release;
