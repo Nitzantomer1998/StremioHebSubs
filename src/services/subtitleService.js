@@ -1,6 +1,7 @@
 import chardet from "chardet";
 import iconv from "iconv-lite";
 
+import googleApi from "../apis/googleApi.js";
 import subtitleConfig from "../configs/subtitleConfig.js";
 
 
@@ -32,10 +33,27 @@ const decodeSubtitle = async (subtitleContent) => {
     return decodeSubtitleContent;
 };
 
+const translateSubtitle = async (subtitleContent) => {
+    const chunks = divideSubtitle(subtitleContent);
+    const translations = [];
+
+    for (const chunk of chunks) {
+        const url = `${googleApi.TRANSLATE_URL}q=${encodeURIComponent(chunk)}`;;
+        const response = await httpService.safeGetRequest(url);
+        const body = await response.body.json();
+        const translatedText = body && body[0] && body[0][0] && body[0].map((s) => s[0]).join("");
+
+        translations.push(translatedText);
+    }
+
+    return translations.join(' ');
+};
+
 const subtitleService = {
     convertSubtitle,
     detectSubtitleFormat,
     decodeSubtitle,
+    translateSubtitle,
 };
 
 
