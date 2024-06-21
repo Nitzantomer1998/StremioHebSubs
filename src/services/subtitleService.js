@@ -7,14 +7,7 @@ import divideSubtitle from "../utils/divideSubtitle.js";
 import googleApi from "../apis/googleApi.js";
 
 
-const convertSubtitle = (subtitleContent) => {
-    const subtitleFormat = detectSubtitleFormat(subtitleContent);
-
-    if (subtitleConfig.supportedSubtitleFormats.includes(subtitleFormat)) return subtitleContent;
-    else if (subtitleConfig.unsupportedSubtitleFormats.includes(subtitleFormat)) return subtitleConfig.defaultSubtitleContent;
-    else if (subtitleConfig.customSubtitleFormats.includes(subtitleFormat)) return subtitleConfig.subtitleConverter[subtitleFormat](subtitleContent);
-    else throw new Error(`Unsupported Subtitle Format: ${subtitleFormat}`);
-};
+const cleanSubtitle = (subtitleContent) => subtitleContent.replace(/<[^>]*>/g, "");
 
 const detectSubtitleFormat = (subtitleContent) => {
     subtitleContent = subtitleContent.trim();
@@ -51,11 +44,21 @@ const translateSubtitle = async (subtitleContent) => {
     return translations.join(" ");
 };
 
+const convertSubtitle = (subtitleContent) => {
+    const subtitleFormat = detectSubtitleFormat(subtitleContent);
+
+    if (subtitleConfig.supportedSubtitleFormats.includes(subtitleFormat)) return subtitleContent;
+    else if (subtitleConfig.unsupportedSubtitleFormats.includes(subtitleFormat)) return subtitleConfig.defaultSubtitleContent;
+    else if (subtitleConfig.customSubtitleFormats.includes(subtitleFormat)) return subtitleConfig.subtitleConverter[subtitleFormat](subtitleContent);
+    else throw new Error(`Unsupported Subtitle Format: ${subtitleFormat}`);
+};
+
 const subtitleService = {
-    convertSubtitle,
+    cleanSubtitle,
     detectSubtitleFormat,
     decodeSubtitle,
     translateSubtitle,
+    convertSubtitle,
 };
 
 
