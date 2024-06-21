@@ -29,7 +29,7 @@ const mapSubtitlesToStremio = (subtitles) => {
         id: s.name,
         provider: "Google Translate",
         score: 0,
-        lang: "heb",
+        lang: "Hebrew (Translated)",
         url: `${baseConfig.BASE_URL}/subtitles/MT/${s.imdbID}/${s.season}/${s.episode}/${s.id}`,
     }));
 
@@ -46,7 +46,8 @@ const extractSubtitle = async (subtitleID) => {
     const subtitleContent = await subtitleResponse.body.text();
     
     const decodedContent = await subtitleService.decodeSubtitle(subtitleContent);
-    const translatedSubtitle = await subtitleService.translateSubtitle(decodedContent);
+    const cleanedContent = subtitleService.cleanSubtitle(decodedContent);
+    const translatedSubtitle = await subtitleService.translateSubtitle(cleanedContent);
     const convertedContent = subtitleService.convertSubtitle(translatedSubtitle);
 
     return convertedContent;

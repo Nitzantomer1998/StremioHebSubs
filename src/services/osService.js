@@ -29,7 +29,7 @@ const mapSubtitlesToStremio = (subtitles) => {
         id: s.name,
         provider: "OpenSubtitles",
         score: 0,
-        lang: "heb",
+        lang: "Hebrew",
         url: `${baseConfig.BASE_URL}/subtitles/OS/${s.imdbID}/${s.season}/${s.episode}/${s.id}`,
     }));
 
@@ -46,7 +46,8 @@ const extractSubtitle = async (subtitleID) => {
     const subtitleContent = await subtitleResponse.body.text();
 
     const decodedContent = await subtitleService.decodeSubtitle(subtitleContent);
-    const convertedContent = subtitleService.convertSubtitle(decodedContent);
+    const cleanedContent = subtitleService.cleanSubtitle(decodedContent);
+    const convertedContent = subtitleService.convertSubtitle(cleanedContent);
 
     return convertedContent;
 };
