@@ -1,8 +1,10 @@
 import chardet from "chardet";
 import iconv from "iconv-lite";
 
-import googleApi from "../apis/googleApi.js";
+import httpService from "./httpService.js";
 import subtitleConfig from "../configs/subtitleConfig.js";
+import divideSubtitle from "../utils/divideSubtitle.js";
+import googleApi from "../apis/googleApi.js";
 
 
 const convertSubtitle = (subtitleContent) => {
