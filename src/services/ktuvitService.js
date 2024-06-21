@@ -30,7 +30,7 @@ const mapSubtitlesToStremio = (subtitles) => {
         id: s.name,
         provider: "Ktuvit",
         score: 0,
-        lang: "heb",
+        lang: "Hebrew",
         url: `${baseConfig.BASE_URL}/subtitles/Ktuvit/${s.imdbID}/${s.season}/${s.episode}/${s.id}`,
     }));
 
@@ -50,8 +50,8 @@ const extractSubtitle = async (subtitleID) => {
     const subtitleBuffer = await downloadResponse.body.arrayBuffer();
 
     const decodedContent = await subtitleService.decodeSubtitle(subtitleBuffer);
-    if (decodedContent === "הבקשה לא נמצאה, נא לנסות להוריד את הקובץ בשנית") throw new Error("Investigate subtitle download error");
-    const convertedContent = subtitleService.convertSubtitle(decodedContent);
+    const cleanedContent = subtitleService.cleanSubtitle(decodedContent);
+    const convertedContent = subtitleService.convertSubtitle(cleanedContent);
 
     return convertedContent;
 };

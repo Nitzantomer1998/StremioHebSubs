@@ -27,7 +27,7 @@ const mapSubtitlesToStremio = (subtitles) => {
         id: s.name,
         provider: "Wizdom",
         score: 0,
-        lang: "heb",
+        lang: "Hebrew",
         url: `${baseConfig.BASE_URL}/subtitles/Wizdom/${s.imdbID}/${s.season}/${s.episode}/${s.id}`,
     }));
 
@@ -45,7 +45,8 @@ const extractSubtitle = async (subtitleID) => {
     const content = fileEntry.getData().toString();
 
     const decodedContent = await subtitleService.decodeSubtitle(content);
-    const convertedContent = subtitleService.convertSubtitle(decodedContent);
+    const cleanedContent = subtitleService.cleanSubtitle(decodedContent);
+    const convertedContent = subtitleService.convertSubtitle(cleanedContent);
 
     return convertedContent;
 };

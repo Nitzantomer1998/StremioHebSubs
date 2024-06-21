@@ -30,7 +30,6 @@ const sortSubtitlesByFilename = (subtitles, filename) => {
         s.id = `${similarityScore}% [${s.provider}] ${s.id}`;
         s.score = similarityScore;
     });
-
     subtitles.sort((a, b) => b.score - a.score);
 
     return subtitles;
