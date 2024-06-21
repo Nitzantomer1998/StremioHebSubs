@@ -48,7 +48,7 @@ const translateSubtitle = async (subtitleContent) => {
         translations.push(translatedText);
     }
 
-    return translations.join(' ');
+    return translations.join(" ");
 };
 
 const subtitleService = {
