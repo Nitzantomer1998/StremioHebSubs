@@ -5,7 +5,6 @@ import stremioService from "../services/stremioService.js";
 import extractData from "../utils/extractData.js";
 
 
-const getHomePage = (req, res) => res.sendFile("index.html", { root: "./public/pages" });
 const getConfigPage = (req, res) => res.sendFile("config.html", { root: "./public/pages" });
 const getStaticFile = (req, res) => res.sendFile(req.params.path, { root: `./public/${req.params.folder}` });
 
@@ -43,7 +42,6 @@ const getSubtitleContent = async (req, res) => {
 };
 
 const stremioController = {
-    getHomePage,
     getConfigPage,
     getStaticFile,
     getManifest,

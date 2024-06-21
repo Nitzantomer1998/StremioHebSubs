@@ -4,35 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add-on Configuration</title>
+    <title>Stremio Heb Subs Add-on</title>
     <link rel="stylesheet" href="static/styles/config.css">
+    <link rel="stylesheet" href="static/styles/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 
 <body>
     <div class="outer-container">
         <div class="inner-container">
-            <h1>Subtitle Providers</h1>
+            <div class="logo-container">
+                <img src="static/icons/icon.svg" alt="StremioHebSubs Logo">
+            </div>
 
-            <form id="configForm">
-                <input type="checkbox" id="wizdom" name="provider" value="Wizdom">
-                <label for="wizdom">Wizdom (Optimal)</label>
+            <div class="features-container">
+                <h2>Why Use Heb Subs Add-On?</h2>
+                <ul>
+                    <li><i class="fas fa-tachometer-alt"></i> <b>Fast & Reliable</b>: Stable, optimized, and constantly evolving.</li>
+                    <li><i class="fas fa-cogs"></i> <b>Customizable Providers</b>: Tailord to your preferred subtitle providers.</li>
+                    <li><i class="fas fa-sort-amount-down"></i> <b>Sorted Subtitles</b>: Subtitles are sorted by their relevance and compatibility.</li>
+                    <li><i class="fas fa-info-circle"></i> <b>Detailed Subtitle Info</b>: <code>97% [Wizdom] Godzilla.x.Kong.The.New.Empire...</code></li>
+                </ul>
+            </div>
 
-                <input type="checkbox" id="os" name="provider" value="OS">
-                <label for="os">OpenSubtitles</label>
+            <div>
+                <h1>Subtitle Providers</h1>
 
-                <input type="checkbox" id="ktuvit" name="provider" value="Ktuvit">
-                <label for="ktuvit">Ktuvit</label>
+                <form id="configForm">
+                    <input type="checkbox" id="wizdom" name="provider" value="Wizdom">
+                    <label for="wizdom">Wizdom (Optimal)</label>
 
-                <input type="checkbox" id="mt" name="provider" value="MT">
-                <label for="mt">Machine Translate</label>
+                    <input type="checkbox" id="os" name="provider" value="OS">
+                    <label for="os">OpenSubtitles</label>
 
-                <div class="vertical-space"></div>
+                    <input type="checkbox" id="ktuvit" name="provider" value="Ktuvit">
+                    <label for="ktuvit">Ktuvit</label>
 
-                <button type="button" id="saveButton" onclick="saveConfig()" disabled>Save</button>
-            </form>
+                    <input type="checkbox" id="mt" name="provider" value="MT">
+                    <label for="mt">Machine Translate</label>
 
-            <button type="button" class="feedback-button" onclick="redirectToIssuePage()">Got a Request or
-                Issue?</button>
+                    <div class="vertical-space"></div>
+
+                    <button type="button" id="saveButton" onclick="saveConfig()" disabled>Save</button>
+                </form>
+
+                <p><a href="https://github.com/Nitzantomer1998/StremioHebSubs/issues">Got a Request or An Issue ?</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="providers-container">
+
         </div>
     </div>
     <script src="static/scripts/config.js"></script>
