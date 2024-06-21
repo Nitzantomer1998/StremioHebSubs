@@ -6,8 +6,6 @@ import tryCatchWrapper from "../utils/tryCatchWrapper.js";
 
 
 const router = express.Router();
-router.get("/", stremioController.getHomePage);
-
 router.get("/configure", stremioController.getConfigPage);
 router.get("/:userConfig/configure", stremioController.getConfigPage);
 
