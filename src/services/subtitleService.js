@@ -30,16 +30,17 @@ const decodeSubtitle = async (subtitleContent) => {
 
 const translateSubtitle = async (subtitleContent) => {
     const chunks = divideSubtitle(subtitleContent);
-    const translations = [];
+    const translationPromises = [];
 
     for (const chunk of chunks) {
-        const url = `${googleApi.TRANSLATE_URL}q=${encodeURIComponent(chunk)}`;;
-        const response = await httpService.safeGetRequest(url);
-        const body = await response.body.json();
-        const translatedText = body && body[0] && body[0][0] && body[0].map((s) => s[0]).join("");
+        const url = `${googleApi.TRANSLATE_URL}q=${encodeURIComponent(chunk)}`;
+        const promise = httpService.safeGetRequest(url)
+            .then(response => response.body.json())
+            .then(body => body && body[0] && body[0][0] && body[0].map(s => s[0]).join(""));
 
-        translations.push(translatedText);
+        translationPromises.push(promise);
     }
+    const translations = await Promise.all(translationPromises);
 
     return translations.join(" ");
 };
