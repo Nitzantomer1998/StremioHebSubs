@@ -1,4 +1,4 @@
-const divideSubtitle = (text, maxLength = 9000) => {
+const divideSubtitle = (text, maxLength = 5000) => {
     const words = text.split(" ");
     const chunks = [];
     let chunk = "";
