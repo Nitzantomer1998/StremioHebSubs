@@ -1,11 +1,14 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: #ffffff;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start;
+    min-height: 100vh;
     margin: 0;
+    padding-top: auto;
+    padding-bottom: auto;
+    overflow: auto;
     background-image: url(https://dl.strem.io/addon-background.jpg);
     background-size: cover;
     background-position: center center;
@@ -17,6 +20,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px;
 }
 
 .inner-container {
@@ -27,6 +31,8 @@ body {
     width: 90%;
     max-width: 600px;
     text-align: center;
+    padding-top: auto;
+    padding-bottom: auto;
 }
 
 h1 {
@@ -50,7 +56,7 @@ form {
 label {
     position: relative;
     display: inline-block;
-    width: 40%;
+    width: 50%;
     padding: 12px 20px;
     font-size: 17px;
     color: #000000;
@@ -107,7 +113,7 @@ button {
     border-radius: 50px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: 60%;
+    width: 70%;
     margin-bottom: 20px;
 }
 
@@ -168,4 +174,54 @@ button:disabled {
     border-radius: 4px;
     font-family: 'Courier New', Courier, monospace;
     margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+    .features-container h2 {
+        font-size: 22px;
+    }
+
+    .features-container ul li {
+        font-size: 14px;
+    }
+
+    .config-container h1 {
+        font-size: 22px;
+    }
+
+    .config-container label {
+        width: 50%;
+    }
+
+    .config-container button {
+        width: 70%;
+    }
+}
+
+@media (max-width: 568px) {
+    .features-container h2 {
+        font-size: 18px;
+    }
+
+    .features-container ul li {
+        font-size: 12px;
+    }
+
+    .config-container h1 {
+        font-size: 18px;
+    }
+
+    .config-container label {
+        width: 60%;
+        font-size: 14px;
+    }
+
+    .config-container button {
+        width: 95%;
+        font-size: 14px;
+    }
+
+    .config-container p a {
+        font-size: 14px;
+    }
 }
