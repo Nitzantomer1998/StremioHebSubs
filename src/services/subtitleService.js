@@ -64,18 +64,17 @@ const translateSubtitle = async (subtitleContent) => {
 };
 
 const fixSubtitlePunctuation = (subtitleContent) => {
-    const punctuationMarks = ["...", "..", ".", ",", "?", "!", ":"];
+    const punctuationRegex = /[.,?!:]+$/;
+    const hebrewRegex = /[\u0590-\u05FF]+/;
     const modifiedSubtitleLines = [];
 
     const subtitleLines = subtitleContent.split("\n");
     for (let subtitleLine of subtitleLines) {
-        subtitleLine = subtitleLine.replace(/-/g, "");
+        if (hebrewRegex.test(subtitleLine)) {
+            subtitleLine = subtitleLine.replace(/-/g, "");
 
-        for (const mark of punctuationMarks) {
-            if (subtitleLine.endsWith(mark)) {
-                subtitleLine = mark + subtitleLine.slice(0, -mark.length);
-                break;
-            }
+            const match = subtitleLine.match(punctuationRegex);
+            if (match) subtitleLine = match[0] + subtitleLine.slice(0, -match[0].length);
         }
 
         modifiedSubtitleLines.push(subtitleLine);
