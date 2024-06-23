@@ -43,13 +43,10 @@ const extractSubtitle = async (subtitleID) => {
     const subtitleLink = responseBody.link;
 
     const subtitleResponse = await httpService.safeGetRequest(subtitleLink, osConfig.GET_HEADERS, "OS");
-    const subtitleContent = await subtitleResponse.body.text();
+    const extractedSubtitle = await subtitleResponse.body.text();
+    const subtitleContent = await subtitleService.subtitlePipeline(extractedSubtitle);
 
-    const decodedContent = await subtitleService.decodeSubtitle(subtitleContent);
-    const cleanedContent = subtitleService.cleanSubtitle(decodedContent);
-    const convertedContent = subtitleService.convertSubtitle(cleanedContent);
-
-    return convertedContent;
+    return subtitleContent;
 };
 
 const osService = {

@@ -43,14 +43,10 @@ const extractSubtitle = async (subtitleID) => {
     const subtitleLink = responseBody.link;
 
     const subtitleResponse = await httpService.safeGetRequest(subtitleLink, osConfig.GET_HEADERS, "MT");
-    const subtitleContent = await subtitleResponse.body.text();
-    
-    const decodedContent = await subtitleService.decodeSubtitle(subtitleContent);
-    const cleanedContent = subtitleService.cleanSubtitle(decodedContent);
-    const translatedSubtitle = await subtitleService.translateSubtitle(cleanedContent);
-    const convertedContent = subtitleService.convertSubtitle(translatedSubtitle);
+    const extractedSubtitle = await subtitleResponse.body.text();
+    const subtitleContent = await subtitleService.subtitlePipeline(extractedSubtitle, false);
 
-    return convertedContent;
+    return subtitleContent;
 };
 
 const mtService = {

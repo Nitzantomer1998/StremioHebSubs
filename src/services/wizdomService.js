@@ -42,13 +42,10 @@ const extractSubtitle = async (subtitleID) => {
     const zip = new AdmZip(Buffer.from(data));
     const zipEntries = zip.getEntries();
     const fileEntry = zipEntries[zipEntries.length - 1];
-    const content = fileEntry.getData().toString();
+    const extractedSubtitle = fileEntry.getData().toString();
+    const subtitleContent = await subtitleService.subtitlePipeline(extractedSubtitle);
 
-    const decodedContent = await subtitleService.decodeSubtitle(content);
-    const cleanedContent = subtitleService.cleanSubtitle(decodedContent);
-    const convertedContent = subtitleService.convertSubtitle(cleanedContent);
-
-    return convertedContent;
+    return subtitleContent;
 };
 
 const wizdomService = {
