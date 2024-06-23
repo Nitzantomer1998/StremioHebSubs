@@ -38,7 +38,6 @@ const safePostRequest = async (url, headers, body, provider, tries = 2) => {
         response = await post(url, headers, body);
 
         if (response.statusCode === 200) break;
-
     }
 
     if (response.statusCode !== 200) throw new Error(`${provider} safePostRequest - Code=${response.statusCode}, Message=${(await response.body?.json())?.errors?.[0]}`);

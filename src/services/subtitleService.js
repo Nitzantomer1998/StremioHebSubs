@@ -17,7 +17,9 @@ const subtitlePipeline = async (subtitleContent, isTranslated = true) => {
 
     return fixedSubtitle;
 };
+
 const cleanSubtitle = (subtitleContent) => subtitleContent.replace(/<[^>]*>/g, "");
+
 const decodeSubtitle = async (subtitleContent) => {
     const bufferArray = Buffer.from(subtitleContent);
     const detectedEncoding = chardet.detect(bufferArray);
@@ -25,6 +27,7 @@ const decodeSubtitle = async (subtitleContent) => {
 
     return decodeSubtitleContent;
 };
+
 const detectSubtitleFormat = (subtitleContent) => {
     subtitleContent = subtitleContent.trim();
 
@@ -35,12 +38,14 @@ const detectSubtitleFormat = (subtitleContent) => {
 
     return "unknown";
 };
+
 const convertSubtitle = (subtitleContent, subtitleFormat) => {
     if (subtitleConfig.supportedSubtitleFormats.includes(subtitleFormat)) return subtitleContent;
     else if (subtitleConfig.unsupportedSubtitleFormats.includes(subtitleFormat)) return subtitleConfig.defaultSubtitleContent;
     else if (subtitleConfig.customSubtitleFormats.includes(subtitleFormat)) return subtitleConfig.subtitleConverter[subtitleFormat](subtitleContent);
     else throw new Error(`Unsupported Subtitle Format: ${subtitleFormat}`);
 };
+
 const translateSubtitle = async (subtitleContent) => {
     const chunks = divideSubtitle(subtitleContent);
     const translationPromises = [];
@@ -57,6 +62,7 @@ const translateSubtitle = async (subtitleContent) => {
 
     return translations.join(" ");
 };
+
 const fixSubtitlePunctuation = (subtitleContent) => {
     const punctuationMarks = ["...", "..", ".", ",", "?", "!", ":"];
     const modifiedSubtitleLines = [];
