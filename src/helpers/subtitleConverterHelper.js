@@ -2,12 +2,12 @@ const convertVTT = (subtitleContent) => {
     const srtLines = [];
     let eventCount = 0;
 
-    const lines = subtitleContent.split("\n");
-    const dialoguePattern = /^(\d+:\d+:\d+\.\d+)\s*-->\s*(\d+:\d+:\d+\.\d+)\s*(.*)/;
+    const dialoguePattern = /(\d+:\d+:\d+\.\d+)\s*-->\s*(\d+:\d+:\d+\.\d+)\s*(.*)/g;
+    const dialogueLines = subtitleContent.match(dialoguePattern);
 
-    lines.forEach((line) => {
+    dialogueLines.forEach((line) => {
         const match = dialoguePattern.exec(line);
-        if (match === false) return;
+        if (match === null) return;
 
         eventCount++;
         const startTime = match[1].replace(".", ",");
@@ -24,12 +24,12 @@ const convertASS = (subtitleContent) => {
     const srtLines = [];
     let eventCount = 0;
 
-    const lines = subtitleContent.split("\n");
-    const dialoguePattern = /^Dialogue:\s*\d+,(\d+:\d+:\d+\.\d+),(\d+:\d+:\d+\.\d+),.*,,(.*)/;
+    const dialoguePattern = /Dialogue:\s*\d+,(\d+:\d+:\d+\.\d+),(\d+:\d+:\d+\.\d+),.*,,(.*)/g;
+    const dialogueLines = subtitleContent.match(dialoguePattern);
 
-    lines.forEach((line) => {
+    dialogueLines.forEach((line) => {
         const match = dialoguePattern.exec(line);
-        if (match === false) return;
+        if (match === null) return;
 
         eventCount++;
         const startTime = match[1].replace(".", ",");

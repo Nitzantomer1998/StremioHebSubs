@@ -3,28 +3,27 @@ import subtitleConverterHelper from "../helpers/subtitleConverterHelper.js";
 
 const defaultSubtitleContent = "1\n00:00:00,000 --> 23:59:59,000\nהכתובית אינה תקינה, אנא נסו אחרת\n\n";
 
-const supportedSubtitleFormats = ["srt", "vtt"];
-const customSubtitleFormats = ["ass"];
+const supportedSubtitleFormats = ["srt"];
 const unsupportedSubtitleFormats = ["sub"];
+const customSubtitleFormats = ["vtt", "ass"];
 
 const subtitleFormatsRegex = {
-    srt: /^(\d+)(\s*)(\d{2}:\d{2}:\d{2},\d{3})(\s*-->\s*)(\d{2}:\d{2}:\d{2},\d{3})/,
-    vtt: /^(\d+)(\s*)(\d{2}:\d{2}:\d{2}\.\d{3})(\s*-->\s*)(\d{2}:\d{2}:\d{2}\.\d{3})/,
+    srt: /^(\d+)(\s*)(\d+:\d+:\d+,\d+)(\s*-->\s*)(\d+:\d+:\d+,\d+)/,
+    vtt: /^(\d+)(\s*)(\d+:\d+:\d+\.\d+)(\s*-->\s*)(\d+:\d+:\d+\.\d+)/,
     ass: /^[\s\r\n]*\[Script Info\]\r?\n.*[\s\r\n]*\[Events\]\r?\n/g,
     sub: /^(\{\d+\})(\{\d+\})/,
 };
 
 const subtitleConverter = {
-    ass: subtitleConverterHelper.convertAssToSrt,
+    vtt: subtitleConverterHelper.convertVTT,
+    ass: subtitleConverterHelper.convertASS,
 };
 
 const subtitleConfig = {
     defaultSubtitleContent,
-
     supportedSubtitleFormats,
-    customSubtitleFormats,
     unsupportedSubtitleFormats,
-
+    customSubtitleFormats,
     subtitleFormatsRegex,
     subtitleConverter,
 };
