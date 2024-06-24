@@ -9,8 +9,8 @@ import googleApi from "../apis/googleApi.js";
 
 const subtitlePipeline = async (subtitleContent, isTranslated = true) => {
     const decodedSubtitle = await decodeSubtitle(subtitleContent);
+    const detectedSubtitleFormat = detectSubtitleFormat(decodedSubtitle);
     const cleanedSubtitle = cleanSubtitle(decodedSubtitle);
-    const detectedSubtitleFormat = detectSubtitleFormat(cleanedSubtitle);
     const convertedSubtitle = convertSubtitle(cleanedSubtitle, detectedSubtitleFormat);
     const translatedSubtitle = isTranslated ? convertedSubtitle : await translateSubtitle(convertedSubtitle);
     const fixedSubtitle = fixSubtitlePunctuation(translatedSubtitle);
@@ -26,15 +26,6 @@ const decodeSubtitle = async (subtitleContent) => {
     return decodeSubtitleContent;
 };
 
-const cleanSubtitle = (subtitleContent) => {
-    const removedTags = subtitleContent.replace(/<[^>]*>/g, "");
-    const removedParentheses = removedTags.replace(/\([^\)]*\)/g, "");
-    const removedCurlyBrackets = removedParentheses.replace(/\{[^\}]*\}/g, "");
-    const removedSquareBrackets = removedCurlyBrackets.replace(/\[[^\]]*\]/g, "");
-
-    return removedSquareBrackets;
-};
-
 const detectSubtitleFormat = (subtitleContent) => {
     subtitleContent = subtitleContent.trim();
 
@@ -44,6 +35,15 @@ const detectSubtitleFormat = (subtitleContent) => {
     if (subtitleConfig.subtitleFormatsRegex.sub.test(subtitleContent)) return "sub";
 
     return "unknown";
+};
+
+const cleanSubtitle = (subtitleContent) => {
+    const removedTags = subtitleContent.replace(/<[^>]*>/g, "");
+    const removedParentheses = removedTags.replace(/\([^\)]*\)/g, "");
+    const removedCurlyBrackets = removedParentheses.replace(/\{[^\}]*\}/g, "");
+    const removedSquareBrackets = removedCurlyBrackets.replace(/\[[^\]]*\]/g, "");
+
+    return removedSquareBrackets;
 };
 
 const convertSubtitle = (subtitleContent, subtitleFormat) => {
