@@ -8,10 +8,10 @@ const unsupportedSubtitleFormats = ["sub"];
 const customSubtitleFormats = ["vtt", "ass"];
 
 const subtitleFormatsRegex = {
-    srt: /^(\d+)(\s*)(\d+:\d+:\d+,\d+)(\s*-->\s*)(\d+:\d+:\d+,\d+)/,
-    vtt: /^(\d+)(\s*)(\d+:\d+:\d+\.\d+)(\s*-->\s*)(\d+:\d+:\d+\.\d+)/,
-    ass: /^[\s\r\n]*\[Script Info\]\r?\n.*[\s\r\n]*\[Events\]\r?\n/g,
-    sub: /^(\{\d+\})(\{\d+\})/,
+    srt: /(\d+)(\s*)(\d+:\d+:\d+,\d+)(\s*-->\s*)(\d+:\d+:\d+,\d+)/,
+    vtt: /(\d+:\d+:\d+\.\d+)(\s*-->\s*)(\d+:\d+:\d+\.\d+)/,
+    ass: /(Dialogue:)(\s*)(\d+,)(\d+:\d+:\d+\.\d+,)(\d+:\d+:\d+\.\d+,)(.*,)(.*,)(\d+,\d+,\d+,),/,
+    sub: /(\{\d+\})(\{\d+\})/,
 };
 
 const subtitleConverter = {
