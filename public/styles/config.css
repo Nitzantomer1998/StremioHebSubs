@@ -35,103 +35,6 @@ body {
     padding-bottom: auto;
 }
 
-h1 {
-    font-size: 28px;
-    color: #ffffff;
-    margin-bottom: 25px;
-}
-
-p a {
-    font-size: 18px;
-    color: #ffffff;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-label {
-    position: relative;
-    display: inline-block;
-    width: 50%;
-    padding: 12px 20px;
-    font-size: 17px;
-    color: #000000;
-    border-radius: 50px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    margin-bottom: 15px;
-}
-
-input[type="checkbox"] {
-    display: none;
-}
-
-input[type="checkbox"]+label {
-    background-color: #ffffff;
-}
-
-input[type="checkbox"]+label:hover {
-    background-color: #00A0FA;
-    color: #ffffff;
-    font-weight: 600;
-}
-
-input[type="checkbox"]:checked+label {
-    background-color: #00A0FA;
-    color: #ffffff;
-    font-weight: 600;
-}
-
-input[type="checkbox"]:checked+label:hover {
-    background-color: #277cae;
-    color: #000000;
-    font-weight: 400;
-}
-
-input[type="checkbox"]:checked+label::after {
-    content: '✔';
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 17px;
-    color: #ffffff;
-}
-
-button {
-    align-self: center;
-    background-color: #1db131;
-    color: #ffffff;
-    border: none;
-    padding: 12px 25px;
-    font-size: 17px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 70%;
-    margin-bottom: 20px;
-}
-
-button:hover {
-    background-color: #2dcb42;
-    font-weight: 600;
-}
-
-button:disabled {
-    background-color: #cccccc;
-    color: #666666;
-    cursor: not-allowed;
-}
-
-.vertical-space {
-    height: 20px;
-}
-
 .logo-container img {
     width: 120px;
 }
@@ -176,6 +79,103 @@ button:disabled {
     margin-left: 10px;
 }
 
+.config-container h1 {
+    font-size: 28px;
+    color: #ffffff;
+    margin-bottom: 25px;
+}
+
+.config-container p a {
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.config-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.config-container label {
+    position: relative;
+    display: inline-block;
+    width: 50%;
+    padding: 12px 20px;
+    font-size: 17px;
+    color: #000000;
+    border-radius: 50px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.config-container input[type="checkbox"] {
+    display: none;
+}
+
+.config-container input[type="checkbox"]+label {
+    background-color: #ffffff;
+}
+
+.config-container input[type="checkbox"]+label:hover {
+    background-color: #00A0FA;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.config-container input[type="checkbox"]:checked+label {
+    background-color: #00A0FA;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.config-container input[type="checkbox"]:checked+label:hover {
+    background-color: #277cae;
+    color: #000000;
+    font-weight: 400;
+}
+
+.config-container input[type="checkbox"]:checked+label::after {
+    content: '✔';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 17px;
+    color: #ffffff;
+}
+
+.config-container button {
+    align-self: center;
+    background-color: #1db131;
+    color: #ffffff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 17px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 70%;
+    margin-bottom: 20px;
+}
+
+.config-container button:hover {
+    background-color: #2dcb42;
+    font-weight: 600;
+}
+
+.config-container button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+.config-container .vertical-space {
+    height: 20px;
+}
+
 @media (max-width: 768px) {
     .features-container h2 {
         font-size: 22px;
@@ -195,6 +195,18 @@ button:disabled {
 
     .config-container button {
         width: 70%;
+    }
+
+    .config-container input[type="checkbox"]+label:hover {
+        background-color: #ffffff;
+        color: #000000;
+        font-weight: 400;
+    }
+
+    .config-container input[type="checkbox"]:checked+label:hover {
+        background-color: #00A0FA;
+        color: #ffffff;
+        font-weight: 600;
     }
 }
 
@@ -223,5 +235,17 @@ button:disabled {
 
     .config-container p a {
         font-size: 14px;
+    }
+
+    .config-container input[type="checkbox"]+label:hover {
+        background-color: #ffffff;
+        color: #000000;
+        font-weight: 400;
+    }
+
+    .config-container input[type="checkbox"]:checked+label:hover {
+        background-color: #00A0FA;
+        color: #ffffff;
+        font-weight: 600;
     }
 }
