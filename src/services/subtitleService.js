@@ -8,14 +8,22 @@ import googleApi from "../apis/googleApi.js";
 
 
 const subtitlePipeline = async (subtitleContent, isTranslated = true) => {
-    const cleanedSubtitle = cleanSubtitle(subtitleContent);
-    const decodedSubtitle = await decodeSubtitle(cleanedSubtitle);
-    const detectedSubtitleFormat = detectSubtitleFormat(decodedSubtitle);
-    const convertedSubtitle = convertSubtitle(decodedSubtitle, detectedSubtitleFormat);
+    const decodedSubtitle = await decodeSubtitle(subtitleContent);
+    const cleanedSubtitle = cleanSubtitle(decodedSubtitle);
+    const detectedSubtitleFormat = detectSubtitleFormat(cleanedSubtitle);
+    const convertedSubtitle = convertSubtitle(cleanedSubtitle, detectedSubtitleFormat);
     const translatedSubtitle = isTranslated ? convertedSubtitle : await translateSubtitle(convertedSubtitle);
     const fixedSubtitle = fixSubtitlePunctuation(translatedSubtitle);
 
     return fixedSubtitle;
+};
+
+const decodeSubtitle = async (subtitleContent) => {
+    const bufferArray = Buffer.from(subtitleContent);
+    const detectedEncoding = chardet.detect(bufferArray);
+    const decodeSubtitleContent = iconv.decode(bufferArray, detectedEncoding);
+
+    return decodeSubtitleContent;
 };
 
 const cleanSubtitle = (subtitleContent) => {
@@ -25,14 +33,6 @@ const cleanSubtitle = (subtitleContent) => {
     const removedSquareBrackets = removedCurlyBrackets.replace(/\[[^\]]*\]/g, "");
 
     return removedSquareBrackets;
-};
-
-const decodeSubtitle = async (subtitleContent) => {
-    const bufferArray = Buffer.from(subtitleContent);
-    const detectedEncoding = chardet.detect(bufferArray);
-    const decodeSubtitleContent = iconv.decode(bufferArray, detectedEncoding);
-
-    return decodeSubtitleContent;
 };
 
 const detectSubtitleFormat = (subtitleContent) => {
