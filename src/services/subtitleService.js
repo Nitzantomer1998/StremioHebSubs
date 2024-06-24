@@ -18,7 +18,14 @@ const subtitlePipeline = async (subtitleContent, isTranslated = true) => {
     return fixedSubtitle;
 };
 
-const cleanSubtitle = (subtitleContent) => subtitleContent.replace(/<[^>]*>/g, "");
+const cleanSubtitle = (subtitleContent) => {
+    const removedTags = subtitleContent.replace(/<[^>]*>/g, "");
+    const removedParentheses = removedTags.replace(/\([^\)]*\)/g, "");
+    const removedCurlyBrackets = removedParentheses.replace(/\{[^\}]*\}/g, "");
+    const removedSquareBrackets = removedCurlyBrackets.replace(/\[[^\]]*\]/g, "");
+
+    return removedSquareBrackets;
+};
 
 const decodeSubtitle = async (subtitleContent) => {
     const bufferArray = Buffer.from(subtitleContent);

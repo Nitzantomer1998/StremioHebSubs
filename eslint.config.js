@@ -19,7 +19,7 @@ const eslint = {
         "space-before-blocks": ["error", "always"],
         "key-spacing": ["error", { beforeColon: false, afterColon: true }],
         "arrow-spacing": ["error", { before: true, after: true }],
-        "prefer-destructuring": ["warn", { object: true, array: true }],
+        "prefer-destructuring": ["warn", { object: true }],
     },
 };
 
