@@ -145,8 +145,12 @@ h2 {
     color: #ffffff;
 }
 
+.config-container .button-container {
+    display: flex;
+    width: 75%;
+}
+
 .config-container button {
-    align-self: center;
     background-color: #1db131;
     color: #ffffff;
     border: none;
@@ -155,12 +159,14 @@ h2 {
     border-radius: 50px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: 70%;
-    margin-bottom: 20px;
+    flex: 4;
+    margin: 10px 0;
+    margin-right: -25px;
+    z-index: 1;
 }
 
 .config-container button:hover {
-    background-color: #2dcb42;
+    background-color: #00A0FA;
     font-weight: 600;
 }
 
@@ -170,8 +176,30 @@ h2 {
     cursor: not-allowed;
 }
 
-.config-container .vertical-space {
-    height: 20px;
+#copyButton {
+    background-color: #0f8b0f;
+    color: #ffffff;
+    border: none;
+    padding: 12px 15px;
+    font-size: 17px;
+    border-radius: 0 50px 50px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex: 0.3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#copyButton:hover {
+    background-color: #00A0FA;
+    font-size: 19px;
+}
+
+#copyButton:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
 }
 
 @media (max-width: 768px) {
@@ -194,6 +222,10 @@ h2 {
 
     .config-container button {
         width: 70%;
+        font-size: 16px;
+    }
+
+    .config-container #copyButton {
         font-size: 16px;
     }
 
@@ -234,6 +266,10 @@ h2 {
 
     .config-container button {
         width: 95%;
+        font-size: 14px;
+    }
+
+    .config-container #copyButton {
         font-size: 14px;
     }
 
