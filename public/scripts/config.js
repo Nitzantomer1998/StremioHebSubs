@@ -31,5 +31,17 @@ const saveConfig = () => {
     window.open(`stremio://${stremioLink}`, "_blank");
 };
 
+const copyConfig = async () => {
+    const selectedProviders = Array.from(document.querySelectorAll("input[name='provider']:checked")).map(checkbox => checkbox.value);
+    const encodedProviders = btoa(JSON.stringify(selectedProviders));
+    const stremioLink = `${window.location.host}/${encodedProviders}/manifest.json`;
+
+    const link = `${window.location.protocol}//${stremioLink}`;
+    await navigator?.clipboard?.writeText(link);
+
+    window.alert("Link copied to clipboard");
+};
+
 
 window.saveConfig = saveConfig;
+window.copyConfig = copyConfig;
