@@ -37,7 +37,7 @@ const mapSubtitlesToStremio = (subtitles) => {
     return stremioSubtitles;
 };
 
-const extractSubtitle = async (subtitleID) => {
+const extractSubtitle = async (subtitleID, tries = 2) => {
     const [ktuvitID, subID] = subtitleID.split("-");
 
     const identifierUrl = ktuvitApi.DOWNLOAD_IDENTIFIER_URL;
@@ -45,9 +45,16 @@ const extractSubtitle = async (subtitleID) => {
     const identifierResponseData = await identifierResponse.body.json();
     const identifier = JSON.parse(identifierResponseData.d).DownloadIdentifier;
 
-    const downloadUrl = `${ktuvitApi.DOWNLOAD_URL}DownloadIdentifier=${identifier}`;
-    const downloadResponse = await httpService.safeGetBufferRequest(downloadUrl, ktuvitConfig.GET_HEADERS(), "Ktuvit");
-    const subtitleBuffer = await downloadResponse.body.arrayBuffer();
+    let subtitleBuffer;
+    while (tries--) {
+        const downloadUrl = `${ktuvitApi.DOWNLOAD_URL}DownloadIdentifier=${identifier}`;
+        const downloadResponse = await httpService.safeGetBufferRequest(downloadUrl, ktuvitConfig.GET_HEADERS(), "Ktuvit");
+        subtitleBuffer = await downloadResponse.body.arrayBuffer();
+
+        if (subtitleBuffer.byteLength !== 83) break;
+    }
+
+    if (subtitleBuffer.byteLength === 83) throw new Error("Failed to download ktuvit subtitle");
     const subtitleContent = await subtitleService.subtitlePipeline(subtitleBuffer);
 
     return subtitleContent;
