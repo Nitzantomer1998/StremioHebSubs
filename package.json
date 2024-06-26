@@ -1,6 +1,6 @@
 {
   "name": "stremio-heb-subs",
-  "version": "1.3.6",
+  "version": "1.3.7",
   "description": "Stremio Addon for Hebrew subtitles from all the top notch websites in one convenient location.",
   "main": "index.js",
   "scripts": {
@@ -31,7 +31,7 @@
     "moment-timezone": "^0.5.45",
     "pg": "^8.12.0",
     "transliteration": "^2.3.5",
-    "undici": "^6.19.0",
+    "undici": "^6.19.2",
     "winston": "^3.13.0"
   },
   "devDependencies": {
