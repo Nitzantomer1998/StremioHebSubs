@@ -15,6 +15,13 @@ body {
     background-repeat: no-repeat;
 }
 
+h2 {
+    font-size: 25px;
+    color: #ffffff;
+    margin-bottom: 10px;
+    font-weight: 100;
+}
+
 .outer-container {
     width: 100%;
     display: flex;
@@ -43,46 +50,37 @@ body {
     margin-bottom: 30px;
 }
 
-.features-container h2 {
-    font-size: 22px;
-    color: #ffffff;
-    margin-bottom: 10px;
-    font-weight: 100;
-}
-
 .features-container ul {
     list-style: none;
     padding: 0;
-    font-size: 14px;
     color: #cccccc;
+    font-size: 15px;
 }
 
 .features-container ul li {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     flex-wrap: wrap;
+    text-align: left;
 }
 
 .features-container ul li i {
     color: #ffffff;
-    margin-right: 10px;
+    margin-right: 8px;
     font-size: 20px;
 }
 
 .features-container ul li code {
     background-color: rgba(255, 255, 255, 0.1);
     color: #cccccc;
-    padding: 2px 4px;
     border-radius: 4px;
     font-family: 'Courier New', Courier, monospace;
-    margin-left: 10px;
 }
 
-.config-container h1 {
-    font-size: 28px;
-    color: #ffffff;
-    margin-bottom: 25px;
+.features-container ul li b {
+    margin-right: 5px;
+    padding: 0;
 }
 
 .config-container p a {
@@ -177,24 +175,30 @@ body {
 }
 
 @media (max-width: 768px) {
-    .features-container h2 {
-        font-size: 22px;
+    h2 {
+        font-size: 20px;
     }
 
-    .features-container ul li {
+    .features-container ul {
         font-size: 14px;
     }
 
-    .config-container h1 {
-        font-size: 22px;
+    .features-container ul li i {
+        font-size: 17px;
     }
 
     .config-container label {
         width: 50%;
+        font-size: 16px;
     }
 
     .config-container button {
         width: 70%;
+        font-size: 16px;
+    }
+
+    .config-container p a {
+        font-size: 16px;
     }
 
     .config-container input[type="checkbox"]+label:hover {
@@ -215,12 +219,12 @@ body {
         font-size: 18px;
     }
 
-    .features-container ul li {
-        font-size: 12px;
+    .features-container ul {
+        font-size: 13px;
     }
 
-    .config-container h1 {
-        font-size: 18px;
+    .features-container ul li i {
+        font-size: 16px;
     }
 
     .config-container label {
