@@ -12,15 +12,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const checkboxes = document.querySelectorAll("input[name='provider']");
-    checkboxes.forEach(checkbox => { checkbox.addEventListener("change", updateSaveButtonState); });
+    checkboxes.forEach(checkbox => { checkbox.addEventListener("change", updateButtonsState); });
 
-    updateSaveButtonState();
+    updateButtonsState();
 });
 
-const updateSaveButtonState = () => {
+const updateButtonsState = () => {
     const selectedProviders = document.querySelectorAll("input[name='provider']:checked");
     const saveButton = document.getElementById("saveButton");
+    const copyButton = document.getElementById("copyButton");
+
     saveButton.disabled = selectedProviders.length === 0;
+    copyButton.disabled = selectedProviders.length === 0;
 };
 
 const saveConfig = () => {
@@ -39,7 +42,7 @@ const copyConfig = async () => {
     const link = `${window.location.protocol}//${stremioLink}`;
     await navigator?.clipboard?.writeText(link);
 
-    window.alert("Link copied to clipboard");
+    window.alert("Add-on link copied to clipboard!");
 };
 
 
