@@ -51,10 +51,9 @@ const extractSubtitle = async (subtitleID, tries = 2) => {
         const downloadResponse = await httpService.safeGetBufferRequest(downloadUrl, ktuvitConfig.GET_HEADERS(), "Ktuvit");
         subtitleBuffer = await downloadResponse.body.arrayBuffer();
 
-        if (subtitleBuffer.byteLength !== 83) break;
+        if (await subtitleService.decodeSubtitle(subtitleBuffer) === "הבקשה לא נמצאה, נא לנסות להוריד את הקובץ בשנית") throw new Error(`Ktuvit Failed to Download Subtitle - ${subtitleBuffer.byteLength}`);
+        else break;
     }
-
-    if (subtitleBuffer.byteLength === 83) throw new Error("Failed to download ktuvit subtitle");
     const subtitleContent = await subtitleService.subtitlePipeline(subtitleBuffer);
 
     return subtitleContent;
