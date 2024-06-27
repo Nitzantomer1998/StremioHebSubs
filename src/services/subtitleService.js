@@ -92,7 +92,6 @@ const fixSubtitlePunctuation = (subtitleContent) => {
 
 const subtitleService = {
     subtitlePipeline,
-    decodeSubtitle,
 };
 
 

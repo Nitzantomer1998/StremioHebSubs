@@ -37,7 +37,7 @@ const mapSubtitlesToStremio = (subtitles) => {
     return stremioSubtitles;
 };
 
-const extractSubtitle = async (subtitleID, tries = 2) => {
+const extractSubtitle = async (subtitleID, tries = 3) => {
     const [ktuvitID, subID] = subtitleID.split("-");
 
     const identifierUrl = ktuvitApi.DOWNLOAD_IDENTIFIER_URL;
@@ -51,12 +51,13 @@ const extractSubtitle = async (subtitleID, tries = 2) => {
         const downloadResponse = await httpService.safeGetBufferRequest(downloadUrl, ktuvitConfig.GET_HEADERS(), "Ktuvit");
         subtitleBuffer = await downloadResponse.body.arrayBuffer();
 
-        if (await subtitleService.decodeSubtitle(subtitleBuffer) === "הבקשה לא נמצאה, נא לנסות להוריד את הקובץ בשנית") throw new Error(`Ktuvit Failed to Download Subtitle - ${subtitleBuffer.byteLength}`);
-        else break;
-    }
-    const subtitleContent = await subtitleService.subtitlePipeline(subtitleBuffer);
+        if (subtitleBuffer.byteLength !== 83) break;
 
-    return subtitleContent;
+        await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+
+    if (subtitleBuffer.byteLength === 83) throw new Error(`Failed To Download Ktuvit Subtitle ${subtitleID}`);
+    return await subtitleService.subtitlePipeline(subtitleBuffer);
 };
 
 const ktuvitService = {
