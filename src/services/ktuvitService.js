@@ -30,7 +30,7 @@ const mapSubtitlesToStremio = (subtitles) => {
         id: s.name,
         provider: "Ktuvit",
         score: 0,
-        lang: "🔵 Hebrew",
+        lang: "heb",
         url: `${baseConfig.BASE_URL}/subtitles/Ktuvit/${s.imdbID}/${s.season}/${s.episode}/${s.id}`,
     }));
 
