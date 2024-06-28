@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stremio Heb Subs Add-on</title>
+    <title>Stremio Heb Subs</title>
     <link rel="stylesheet" href="static/styles/config.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="static/icons/icon.svg" type="image/x-icon">
 </head>
 
 <body>
@@ -18,23 +19,24 @@
             </div>
 
             <div class="features-container">
-                <h2>Why Use Heb Subs Add-On?</h2>
-                
+                <h2>למה להשתמש בתוסף Heb Subs?</h2>
+
                 <ul>
-                    <li><i class="fas fa-tachometer-alt"></i><b>Fast & Reliable:</b> Stable, optimized, and constantly evolving.</li>
-                    <li><i class="fas fa-cogs"></i><b>Customizable Providers:</b> Tailord to your preferred subtitle providers.</li>
-                    <li><i class="fas fa-sort-amount-down"></i><b>Sorted Subtitles:</b> Subtitles are sorted by their relevance and compatibility.</li>
-                    <li><i class="fas fa-language"></i><b>Subtitles Formats:</b> Support formats that even stremio doesn't support.</li>
-                    <li><i class="fas fa-info-circle"></i><b>Detailed Subtitle Info:</b> <code>97% [Wizdom] Godzilla.x.Kong.The.New.Empi...</code></li>
+                    <li><i class="fas fa-tachometer-alt"></i><b>מהיר ואמין:</b>&nbsp;יציב, אופטימלי ומתפתח כל הזמן.</li>
+                    <li><i class="fas fa-cogs"></i><b>ספקים מותאמים אישית:</b>&nbsp;מותאם לספקי הכתוביות המועדפים עליך.</li>
+                    <li><i class="fas fa-sort-amount-down"></i><b>כתוביות ממויינות:</b>&nbsp;כתוביות ממויינות לפי הרלוונטיות וההתאמה שלהם.</li>
+                    <li><i class="fas fa-language"></i><b>פורמטי כתוביות:</b>&nbsp;תמיכה בפורמטים שאפילו סטרמיו לא תומך בהם.</li>
+                    <li><i class="fas fa-info-circle"></i><b>מידע מפורט על הכתוביות:</b>&nbsp;<code>97% [Wizdom] Godzilla.x.Kong.The.New.Empi...</code>
+                    </li>
                 </ul>
             </div>
 
             <div class="config-container">
-                <h2>Subtitle Providers</h2>
+                <h2>ספקי כתוביות</h2>
 
                 <form id="configForm">
                     <input type="checkbox" id="wizdom" name="provider" value="Wizdom">
-                    <label for="wizdom">Wizdom (Optimal)</label>
+                    <label for="wizdom">Wizdom (אופטימלי)</label>
 
                     <input type="checkbox" id="os" name="provider" value="OS">
                     <label for="os">OpenSubtitles</label>
@@ -43,19 +45,37 @@
                     <label for="ktuvit">Ktuvit</label>
 
                     <input type="checkbox" id="mt" name="provider" value="MT">
-                    <label for="mt">Machine Translate</label>
+                    <label for="mt">תרגום מכונה</label>
 
                     <div class="button-container">
-                        <button type="button" id="saveButton" onclick="saveConfig()">Save</button>
-                        <button type="button" id="copyButton" onclick="copyConfig()"><i class="fas fa-link"></i></button>
+                        <button type="button" id="saveButton" onclick="saveConfig()">התקן</button>
+                        <button type="button" id="copyButton" onclick="copyConfig()">העתק קישור</button>
                     </div>
                 </form>
+            </div>
 
-                <p><a href="https://github.com/Nitzantomer1998/StremioHebSubs/issues">Got a Request or An Issue ?</a></p>
+            <div class="issue-container">
+                <p><a href="https://github.com/Nitzantomer1998/StremioHebSubs/issues">יש לך בקשה או בעיה?</a></p>
+            </div>
+
+            <div id="donateModal" class="modal-container">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    
+                    <h2>שומרים על Heb Subs חי ובועט! 🚀</h2>
+                    
+                    <hr>
+                    <p>תומכים, משמרים ונהנים! 🌟</p>
+                    <p><b>Heb Subs פועל על שרת חינמי עם משאבים מוגבלים.</b></p>
+                    <p>עם תרומה קטנה שלכם, נוכל לשדרג את הביצועים ולהמשיך לספק לכם שירות איכותי וחינמי.</p>
+                    <p>כל תרומה היא צעד חשוב בדרך הזאת.</p>
+                    <p>תודה על התמיכה והשותפות שלכם! 🙏</p>
+                    <button type="button" id="donateButton" onclick="donatePage()">תרום</button>
+                </div>
             </div>
         </div>
     </div>
-    <script src="static/scripts/config.js"></script>
 </body>
+<script src="static/scripts/config.js"></script>
 
 </html>
