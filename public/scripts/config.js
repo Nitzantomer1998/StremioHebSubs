@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.style.display = "block";
 
     span.onclick = () => modal.style.display = "none";
-    window.onclick = (event) => { if (event.target === modal) modal.style.display = "none"; };
+    window.onclick = (event) => { if (event.target === modal || event.target.id === "donateButton") modal.style.display = "none"; };
 });
 
 const updateButtonsState = () => {
