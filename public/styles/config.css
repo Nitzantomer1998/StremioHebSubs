@@ -1,25 +1,20 @@
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #ffffff;
+    background-color: #007BFF;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    margin: 0;
-    padding-top: auto;
-    padding-bottom: auto;
+    margin: auto;
+    padding: auto;
     overflow: auto;
-    background-image: url(https://dl.strem.io/addon-background.jpg);
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
 }
 
 h2 {
     font-size: 25px;
-    color: #ffffff;
-    margin-bottom: 10px;
+    color: #333333;
     font-weight: 100;
+    margin-bottom: 5px;
 }
 
 .outer-container {
@@ -27,23 +22,21 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px;
+    padding: 25px 0;
 }
 
 .inner-container {
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 20px 30px;
+    background-color: #ffffff;
+    padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     width: 90%;
-    max-width: 600px;
+    max-width: 700px;
     text-align: center;
-    padding-top: auto;
-    padding-bottom: auto;
 }
 
 .logo-container img {
-    width: 120px;
+    width: 100px;
 }
 
 .features-container {
@@ -53,8 +46,8 @@ h2 {
 .features-container ul {
     list-style: none;
     padding: 0;
-    color: #cccccc;
-    font-size: 15px;
+    color: #555555;
+    font-size: 16px;
 }
 
 .features-container ul li {
@@ -66,26 +59,26 @@ h2 {
 }
 
 .features-container ul li i {
-    color: #ffffff;
-    margin-right: 8px;
+    color: #007BFF;
+    margin-right: 10px;
     font-size: 20px;
 }
 
 .features-container ul li code {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #cccccc;
+    background-color: #eeeeee;
+    color: #333333;
     border-radius: 4px;
     font-family: 'Courier New', Courier, monospace;
+    padding: 2px 4px;
+    direction: ltr;
 }
 
 .features-container ul li b {
     margin-right: 5px;
-    padding: 0;
 }
 
-.config-container p a {
-    font-size: 18px;
-    color: #ffffff;
+.config-container {
+    margin-bottom: 30px;
 }
 
 .config-container form {
@@ -98,39 +91,37 @@ h2 {
 .config-container label {
     position: relative;
     display: inline-block;
-    width: 50%;
+    width: 60%;
     padding: 12px 20px;
-    font-size: 17px;
-    color: #000000;
+    font-size: 16px;
+    color: #333333;
     border-radius: 50px;
     cursor: pointer;
     text-align: center;
     transition: background-color 0.3s ease, color 0.3s ease;
     margin-bottom: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #dddddd;
 }
 
 .config-container input[type="checkbox"] {
     display: none;
 }
 
-.config-container input[type="checkbox"]+label {
-    background-color: #ffffff;
-}
-
-.config-container input[type="checkbox"]+label:hover {
-    background-color: #00A0FA;
+.config-container input[type="checkbox"]:checked+label {
+    background-color: #007BFF;
     color: #ffffff;
     font-weight: 600;
 }
 
-.config-container input[type="checkbox"]:checked+label {
-    background-color: #00A0FA;
+.config-container input[type="checkbox"]+label:hover {
+    background-color: #007BFF;
     color: #ffffff;
     font-weight: 600;
 }
 
 .config-container input[type="checkbox"]:checked+label:hover {
-    background-color: #277cae;
+    background-color: #878c8f;
     color: #000000;
     font-weight: 400;
 }
@@ -147,27 +138,35 @@ h2 {
 
 .config-container .button-container {
     display: flex;
-    width: 75%;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .config-container button {
-    background-color: #1db131;
+    background-color: #007BFF;
     color: #ffffff;
     border: none;
-    padding: 12px 25px;
-    font-size: 17px;
+    padding: 12px 20px;
+    font-size: 16px;
     border-radius: 50px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    flex: 4;
-    margin: 10px 0;
-    margin-right: -25px;
-    z-index: 1;
+    flex: 1;
+    margin: 10px 5px;
 }
 
-.config-container button:hover {
-    background-color: #00A0FA;
-    font-weight: 600;
+#saveButton:hover {
+    background-color: #014084;
+}
+
+#copyButton {
+    background: transparent;
+    color: #262626;
+    border: 2px solid #262626;
+}
+
+#copyButton:hover {
+    background-color: #5a6268;
 }
 
 .config-container button:disabled {
@@ -176,33 +175,89 @@ h2 {
     cursor: not-allowed;
 }
 
-#copyButton {
-    background-color: #0f8b0f;
+.issue-container p a {
+    font-size: 16px;
+    color: #007BFF;
+    transition: color 0.3s;
+}
+
+.issue-container p a:hover {
+    color: #0056b3;
+}
+
+.modal-container {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.modal-content p {
+    font-size: 16px;
+    color: #555555;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+.modal-content button {
+    background-color: #007BFF;
     color: #ffffff;
     border: none;
-    padding: 12px 15px;
-    font-size: 17px;
-    border-radius: 0 50px 50px 0;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 50px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    flex: 0.3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
 }
 
-#copyButton:hover {
-    background-color: #00A0FA;
-    font-size: 19px;
+.modal-content button:hover {
+    background-color: #0056b3;
 }
 
-#copyButton:disabled {
-    background-color: #cccccc;
-    color: #666666;
-    cursor: not-allowed;
+.modal-content .close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.modal-content .close:hover,
+.modal-content .close:focus {
+    color: #000;
 }
 
 @media (max-width: 768px) {
+    .outer-container {
+        padding: 20px 20px;
+    }
+
     h2 {
         font-size: 20px;
     }
@@ -212,42 +267,36 @@ h2 {
     }
 
     .features-container ul li i {
-        font-size: 17px;
+        font-size: 18px;
     }
 
     .config-container label {
-        width: 50%;
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .config-container button {
-        width: 70%;
-        font-size: 16px;
+        font-size: 14px;
     }
 
-    .config-container #copyButton {
-        font-size: 16px;
+    .issue-container p a {
+        font-size: 14px;
     }
 
-    .config-container p a {
-        font-size: 16px;
+    .modal-content p {
+        font-size: 14px;
     }
 
-    .config-container input[type="checkbox"]+label:hover {
-        background-color: #ffffff;
-        color: #000000;
-        font-weight: 400;
-    }
-
-    .config-container input[type="checkbox"]:checked+label:hover {
-        background-color: #00A0FA;
-        color: #ffffff;
-        font-weight: 600;
+    .modal-content button {
+        font-size: 14px;
     }
 }
 
 @media (max-width: 568px) {
-    .features-container h2 {
+    .outer-container {
+        padding: 20px 20px;
+    }
+
+    h2 {
         font-size: 18px;
     }
 
@@ -260,32 +309,22 @@ h2 {
     }
 
     .config-container label {
-        width: 60%;
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .config-container button {
-        width: 95%;
-        font-size: 14px;
+        font-size: 13px;
     }
 
-    .config-container #copyButton {
-        font-size: 14px;
+    .issue-container p a {
+        font-size: 13px;
     }
 
-    .config-container p a {
-        font-size: 14px;
+    .modal-content p {
+        font-size: 13px;
     }
 
-    .config-container input[type="checkbox"]+label:hover {
-        background-color: #ffffff;
-        color: #000000;
-        font-weight: 400;
-    }
-
-    .config-container input[type="checkbox"]:checked+label:hover {
-        background-color: #00A0FA;
-        color: #ffffff;
-        font-weight: 600;
+    .modal-content button {
+        font-size: 13px;
     }
 }
