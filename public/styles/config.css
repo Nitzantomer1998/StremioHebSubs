@@ -278,6 +278,26 @@ h2 {
         font-size: 14px;
     }
 
+    .config-container input[type="checkbox"]+label:hover {
+        background-color: #f9f9f9;
+        color: #000000;
+        font-weight: 400;
+    }
+
+    .config-container input[type="checkbox"]:checked+label:hover {
+        background-color: #007BFF;
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    #saveButton:hover {
+        background-color: #007BFF;
+    }
+
+    #copyButton:hover {
+        background: transparent;
+    }
+
     .issue-container p a {
         font-size: 14px;
     }
@@ -314,6 +334,26 @@ h2 {
 
     .config-container button {
         font-size: 13px;
+    }
+
+    .config-container input[type="checkbox"]+label:hover {
+        background-color: #f9f9f9;
+        color: #000000;
+        font-weight: 400;
+    }
+
+    .config-container input[type="checkbox"]:checked+label:hover {
+        background-color: #007BFF;
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    #saveButton:hover {
+        background-color: #007BFF;
+    }
+
+    #copyButton:hover {
+        background: transparent;
     }
 
     .issue-container p a {
