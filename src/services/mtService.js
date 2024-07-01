@@ -29,7 +29,7 @@ const mapSubtitlesToStremio = (subtitles) => {
         id: s.name,
         provider: "Google Translate",
         score: 0,
-        lang: "עברית (תרגום מכונה)",
+        lang: "Machine",
         url: `${baseConfig.BASE_URL}/subtitles/MT/${s.imdbID}/${s.season}/${s.episode}/${s.id}`,
     }));
 
