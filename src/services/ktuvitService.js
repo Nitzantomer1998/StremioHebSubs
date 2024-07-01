@@ -37,23 +37,22 @@ const mapSubtitlesToStremio = (subtitles) => {
     return stremioSubtitles;
 };
 
-const extractSubtitle = async (subtitleID, tries = 4) => {
+const extractSubtitle = async (subtitleID, tries = 3) => {
     const [ktuvitID, subID] = subtitleID.split("-");
-
-    const identifierUrl = ktuvitApi.DOWNLOAD_IDENTIFIER_URL;
-    const identifierResponse = await httpService.safePostRequest(identifierUrl, ktuvitConfig.GET_HEADERS(), { request: { FilmID: ktuvitID, SubtitleID: subID, FontColor: "", FontSize: 0, PredefinedLayout: -1 } }, "Ktuvit");
-    const identifierResponseData = await identifierResponse.body.json();
-    const identifier = JSON.parse(identifierResponseData.d).DownloadIdentifier;
 
     let subtitleBuffer;
     while (tries--) {
+        const identifierUrl = ktuvitApi.DOWNLOAD_IDENTIFIER_URL;
+        const identifierResponse = await httpService.safePostRequest(identifierUrl, ktuvitConfig.GET_HEADERS(), { request: { FilmID: ktuvitID, SubtitleID: subID, FontColor: "", FontSize: 0, PredefinedLayout: -1 } }, "Ktuvit");
+        const identifierResponseData = await identifierResponse.body.json();
+        const identifier = JSON.parse(identifierResponseData.d).DownloadIdentifier;
+
         const downloadUrl = `${ktuvitApi.DOWNLOAD_URL}DownloadIdentifier=${identifier}`;
         const downloadResponse = await httpService.safeGetBufferRequest(downloadUrl, ktuvitConfig.GET_HEADERS(), "Ktuvit");
         subtitleBuffer = await downloadResponse.body.arrayBuffer();
 
         if (subtitleBuffer.byteLength !== 83) break;
-
-        await new Promise((resolve) => setTimeout(resolve, 250));
+        await new Promise((resolve) => setTimeout(resolve, 300));
     }
 
     if (subtitleBuffer.byteLength === 83) throw new Error(`Failed To Download Ktuvit Subtitle ${subtitleID}`);
